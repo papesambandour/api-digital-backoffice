@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-   dd('DTYB7FDGNHHFT', \Illuminate\Support\Facades\Hash::make('DTYB7FDGNHHFT'));
     return redirect('/partner');
 });
 
