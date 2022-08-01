@@ -18,7 +18,7 @@
                     <div class="page-header-title">
                         <i class="icofont icofont-table bg-c-blue"></i>
                         <div class="d-inline">
-                            <h4>Mes mouvement compte</h4>
+                            <h4>Mes mouvements compte</h4>
                             <span>Donne la liste de toutes les entrées et sorties vers le compte du partenaire Intech API </span>
                         </div>
                     </div>

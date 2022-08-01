@@ -18,7 +18,7 @@
                     <div class="page-header-title">
                         <i class="icofont icofont-table bg-c-blue"></i>
                         <div class="d-inline">
-                            <h4>Mes Versement</h4>
+                            <h4>Mes Versements</h4>
                             <span>Donne la liste de tous les versements du partenaire vers son compte Intech API </span>
                         </div>
                     </div>
