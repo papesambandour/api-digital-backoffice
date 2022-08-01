@@ -102,3 +102,4 @@ function checkAuth(): bool
 {
     return session()->has(keyAuth());
 }
+// https://papesambandour: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@github.com/papesambandour/digital_api.git
