@@ -3,10 +3,10 @@
     <div class="pcoded-inner-navbar main-menu">
         <div class="pcoded-search">
             <span class="searchbar-toggle">  </span>
-            <div class="pcoded-search-box ">
-                <input type="text" placeholder="Rechercher une transaction">
-                <span class="search-icon"><i class="ti-search" aria-hidden="true"></i></span>
-            </div>
+            <form id="searchForm" action="/partner/transaction" class="pcoded-search-box ">
+                <input name="external_transaction_id" type="text" placeholder="Rechercher une transaction">
+                <span onclick="document.getElementById('searchForm').submit()" class="search-icon"><i class="ti-search" aria-hidden="true"></i></span>
+            </form>
         </div>
         <div class="pcoded-navigatio-lavel" >Reporting</div>
         <ul class="pcoded-item pcoded-left-item">

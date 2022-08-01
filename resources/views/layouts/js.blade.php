@@ -31,5 +31,23 @@
             nav.removeClass('active');
         }
     });
+
+
 </script>
+<script>
+
+    $('li.page-item > a').on('click',function(event){
+        event.preventDefault();
+        console.log(event.target?.text)
+        let url = window.location.href;
+        url = url.replace(/(\?|&)page=\d*/,'')
+        if(url.indexOf('?') !== -1){
+            window.location.href =url + "&page="+ event.target?.text
+        }else{
+            window.location.href =url + "?page="+ event.target?.text
+        }
+
+    })
+</script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 @yield('js','')

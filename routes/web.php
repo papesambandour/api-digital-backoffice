@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Partners\AuthPartnersController;
 use App\Http\Controllers\Partners\ConfigurationController;
 use App\Http\Controllers\Partners\DashboardController;
 use App\Http\Controllers\Partners\TransactionsController;
@@ -21,7 +22,9 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware'=>[],'prefix'=>'auth-partner'],function(){
-   // Route::get('/login',[] );
+    Route::get('/login',[AuthPartnersController::class,'login'] );
+    Route::post('/login',[AuthPartnersController::class,'loginPost'] );
+    Route::get('/logout',[AuthPartnersController::class,'logOut'] );
 });
 
 
