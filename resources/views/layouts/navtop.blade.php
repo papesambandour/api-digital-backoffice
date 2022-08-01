@@ -37,7 +37,7 @@
             <ul class="nav-right">
                 <li class="user-profile header-notification">
                     <a href="#!">
-                        <img src="{{asset('assets/icon/profil.svg')}}" alt="User Profile" />
+                        <img src="/assets/icon/profil.svg" alt="User Profile" />
                         <span>{{_auth()['first_name']}}</span>
                         <i class="ti-angle-down"></i>
                     </a>
