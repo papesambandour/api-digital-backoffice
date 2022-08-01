@@ -44,12 +44,12 @@
                     <ul class="show-notification profile-notification">
                         <li>
                             <a href="#">
-                                <i class="ti-user"></i> Profile
+                                <i class="ti-user"></i> Profil
                             </a>
                         </li>
                         <li>
                             <a href="/auth-partner/logout">
-                                <i class="ti-layout-sidebar-left"></i> Se déconnecté
+                                <i class="ti-layout-sidebar-left"></i> Se déconnecter
                             </a>
                         </li>
                     </ul>
