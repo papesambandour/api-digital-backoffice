@@ -12,6 +12,11 @@
 
     <div class="page-wrapper">
         <!-- Page-header start -->
+        <div class="col-md-12">
+            @if(Session::has('success'))
+                <p class="alert alert-success">{{ Session::get('success') }}</p>
+            @endif
+        </div>
         <div class="page-header card">
             <div class="row align-items-end">
                 <div class="col-lg-8">
@@ -21,7 +26,17 @@
                             <h4>Mes clefs APIs</h4>
                             <span>Donne la liste de toutes les clés APIs du partenaire  </span>
                         </div>
+
                     </div>
+                </div>
+                <div class="col-lg-4">
+                    <form id="addKey" style=" float: right" action="/partner/apikey/addkey" method="POST">
+                        @csrf
+                        <button onclick='confirm("Voulez-vous ajouter un nouveau clef API ?") === true ? document.getElementById("addKey").submit() : "" ' type="button" class="primary-api-digital btn btn-primary btn-outline-primary btn-block " >
+                            <i  title="Ajouter un clef" class="ti-plus " ></i>
+                            <span style=""> Ajouter un clef</span>
+                        </button>
+                    </form>
                 </div>
                 <div class="col-lg-4">
                 </div>
@@ -101,8 +116,15 @@
                                         </span>
 
                                     </td>
-                                    <td>
-                                        <i onclick='alert("{{$apisKey->app_key}}")' title="Voir le clef API" class="ti-eye " style="font-size: 25px;cursor: pointer"></i>
+                                    <td style="width: 200px">
+                                        <i onclick='alert("{{$apisKey->app_key}}")' title="Voir le clef API" class="ti-eye " style="font-size: 25px;cursor: pointer;padding: 5px"></i>
+
+                                        <form id="{{$apisKey->id}}" style="display: inline" action="/partner/apikey/regenerateKey/{{$apisKey->id}}" method="POST">
+                                            @csrf
+                                            <button type="button" style="margin: 0; padding: 0;border: none;background: transparent ">
+                                                <i onclick='confirm("Voulez-vous régénérer votre clef API ?") === true ? document.getElementById("{{$apisKey->id}}").submit() : "" ' title="Régénérer votre clef API " class="ti-reload " style="color: #fc6180;font-size: 25px;cursor: pointer; padding: 5px"></i>
+                                            </button>
+                                        </form>
                                     </td>
 
                                     <td>

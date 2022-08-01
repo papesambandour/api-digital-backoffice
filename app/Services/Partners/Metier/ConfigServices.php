@@ -39,5 +39,25 @@ class ConfigServices
         }
         return $query->paginate(size());
     }
+    public function addKey(){
+        $key  = PartenerComptes::query()->where('parteners_id',_auth()['parteners_id'])->count();
+       return PartenerComptes::create([
+            'type_partener_compte' => TYPE_PARTNER_COMPTE['API'],
+            'parteners_id' => _auth()['parteners_id'],
+            'created_at' => nowIso(),
+            'state' => STATE['ACTIVED'],
+            'name' => _auth()['first_name'] . ' API KEY ' . (++$key) ,
+            'app_key' => GUID(),
+        ]);
+    }
+    public function regenerateKey($idKey){
+        /**
+         * @var PartenerComptes $partenerComptes
+        */
+        $partenerComptes  = PartenerComptes::query()->where('parteners_id',_auth()['parteners_id'])->where('id',$idKey)->first();
+        $partenerComptes->app_key = GUID();
+        $partenerComptes->save();
+        return $partenerComptes;
+    }
 
 }

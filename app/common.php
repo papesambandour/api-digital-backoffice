@@ -47,12 +47,22 @@ const STATUS = [
   'PROCESSING' => 'statut-infos',
   'PENDING' => 'statut-infos',
 ];
+
+const STATE = [
+    'ACTIVED' => 'ACTIVED',
+    'INACTIVED' => 'INACTIVED',
+    'DELETED' => 'DELETED',
+];
 function status($status): string{
     return  @STATUS[$status] ?? '';
 }
 
 const OPERATIONS= [
     'APROVISIONNEMENT'=>'APROVISIONNEMENT'
+];
+const TYPE_PARTNER_COMPTE =[
+    'API'=>'API',
+    'CAISSE'=>'CAISSE'
 ];
 
 function logoFromName($name): string{
@@ -101,4 +111,17 @@ function logOut(): void{
 function checkAuth(): bool
 {
     return session()->has(keyAuth());
+}
+
+  function GUID(): string
+{
+    if (function_exists('com_create_guid') === true) {
+        return trim(com_create_guid(), '{}');
+    }
+
+    return sprintf('%04X%04X-%04X-%04X-%04X-%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535));
+}
+function nowIso(): string
+{
+    return gmdate("H-m-d H:i:s");
 }

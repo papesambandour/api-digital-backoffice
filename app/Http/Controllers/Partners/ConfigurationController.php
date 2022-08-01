@@ -34,6 +34,14 @@ class ConfigurationController extends Controller
         $date_end= request('date_end');
         return view('partners/config.apikey',compact('apisKeys','date_start','date_end'));
     }
+    public function addKey(){
+        $this->configServices->addKey();
+        return redirect()->back()->with('success','Votre clef est ajouté avec succès');
+    }
+    public function regenerateKey($idKey){
+        $this->configServices->regenerateKey($idKey);
+        return redirect()->back()->with('success','Votre clef est régénéré avec succès');
+    }
     public function reclamation(): Factory|View|Application
     {
         return view('partners/config.reclamation');
