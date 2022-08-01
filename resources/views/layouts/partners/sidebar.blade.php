@@ -17,7 +17,7 @@
                     <span class="pcoded-mcaret"></span>
                 </a>
             </li>
-            <li class="active">
+            <li class="active" style="display: none">
                 <a href="/partner/statistic">
                     <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
                     <span class="pcoded-mtext" >Statistique</span>

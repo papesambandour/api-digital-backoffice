@@ -2,14 +2,20 @@
 
 use App\Models\Transactions;
 use JetBrains\PhpStorm\ArrayShape;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
-#[ArrayShape(["first_name" => "string", "last_name" => "string", "parteners_id" => "string", "solde" => "string"])] function _auth(): array
+#[ArrayShape(["first_name" => "string",  "parteners_id" => "string", "solde" => "string"])] function _auth(): array
 {
+    /**
+     * @var \App\Models\Parteners $partner
+    */
+    //dd(getUser());
+    $partner = \App\Models\Parteners::query()->find(getUser()['id']);
     return [
-        "first_name" =>"Pape Sammba",
-        "last_name" =>"NDOUR",
-        "parteners_id" =>1,
-        "solde" =>"20990.90",
+        "first_name" =>$partner->name,
+        "parteners_id" =>$partner->id,
+        "solde" =>$partner->solde,
     ];
 }
 
@@ -31,7 +37,7 @@ function  page(): int{
 }
 function  size(): int
 {
-    return (int)request('size',10);
+    return (int)request('size',15);
 }
 //'SUCCESS','PENDING','PROCESSING','FAILLED','CANCELED'
 const STATUS = [
@@ -75,6 +81,14 @@ function logoFromName($name): string{
 function loginUser(\App\Models\Parteners $partner):void{
     session([keyAuth() => $partner]);
 }
+
+/**
+ * @throws ContainerExceptionInterface
+ * @throws NotFoundExceptionInterface
+ */
+function getUser(){
+  return  session()->get(keyAuth());
+}
 function keyAuth(): string
 {
     return "__AUTH_PARTENER__";
@@ -82,4 +96,9 @@ function keyAuth(): string
 function logOut(): void{
     session()->forget([keyAuth()]);
     session()->flush();
+}
+
+function checkAuth(): bool
+{
+    return session()->has(keyAuth());
 }

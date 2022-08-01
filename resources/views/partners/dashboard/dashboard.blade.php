@@ -19,7 +19,7 @@
                     <h4 class="currency">{{_auth()['solde']}} XOF</h4>
                     <div>
                                                             <span class="f-left m-t-10 text-muted">
-                                                                <i class="text-c-blue f-16 icofont icofont-warning m-r-10"></i>Le solde du Compte Partenaire
+                                                                <i class="text-c-blue f-16 icofont icofont-money-bag m-r-10"></i>Le solde du Compte Partenaire
                                                             </span>
                     </div>
                 </div>

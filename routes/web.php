@@ -28,7 +28,7 @@ Route::group(['middleware'=>[],'prefix'=>'auth-partner'],function(){
 });
 
 
-Route::group(['middleware'=>[],'prefix'=>'partner'],function(){
+Route::group(['middleware'=>['partner-auth'],'prefix'=>'partner'],function(){
     /*REPORTING START*/
     Route::get('/',[DashboardController::class,'dashboard'] );
     Route::get('/statistic',[DashboardController::class,'statistic'] );

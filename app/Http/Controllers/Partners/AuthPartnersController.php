@@ -31,13 +31,14 @@ class AuthPartnersController extends Controller
 
        $login = $this->loginPartnerServices->login($credentials['email'],$credentials['password']);
        if($login){
-           return "partner";
+           return redirect('partner');
        }else{
-
+           //Redirect::back()->withErrors(['msg' => 'The Message']);
+           return redirect()->back()->with('error','Login ou mot de passe incorrect');
        }
     }
     public function logOut(){
         logOut();
-        redirect("/auth-partner/login");
+       return redirect("/auth-partner/login");
     }
 }

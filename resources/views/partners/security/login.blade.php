@@ -7,6 +7,11 @@
 @section('page')
 
     <div class="row">
+        <div class="col-md-12">
+            @if(Session::has('error'))
+                <p class="alert alert-danger">{{ Session::get('error') }}</p>
+            @endif
+        </div>
         <div class="col-sm-12">
             <!-- Authentication card start -->
             <div class="login-card card-block auth-body mr-auto ml-auto">
