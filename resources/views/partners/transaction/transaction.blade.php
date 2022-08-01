@@ -158,8 +158,8 @@
                                     </th>
                                     <td>{{ $transaction->phone }} </td>
                                     <td class="currency">{{ $transaction->amount }} <span>XOF</span></td>
-                                    <td class="currency">{{ $transaction->fee_amount }} <span>XOF</span></td>
                                     <td class="currency">{{ $transaction->commission_amount }} <span>XOF</span></td>
+                                    <td class="currency">{{ $transaction->fee_amount }} <span>XOF</span></td>
                                     <td>{{ $transaction->sous_service_name }}</td>
                                     <td>
                                         <span class="{{status($transaction->statut)}}">
