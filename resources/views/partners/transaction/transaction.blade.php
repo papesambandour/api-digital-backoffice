@@ -165,6 +165,12 @@
                                         <span class="{{status($transaction->statut)}}">
                                         {{ $transaction->statut }}
                                         </span>
+                                        <details>
+                                            <summary>voir message</summary>
+                                            <p>
+                                                {{$transaction->error_message}}
+                                            </p>
+                                        </details>
                                     </td>
                                     <td>
                                         {{ $transaction->created_at }}
