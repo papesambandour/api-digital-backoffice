@@ -34,7 +34,7 @@
                         @csrf
                         <button onclick='confirm("Voulez-vous ajouter un nouveau clef API ?") === true ? document.getElementById("addKey").submit() : "" ' type="button" class="primary-api-digital btn btn-primary btn-outline-primary btn-block " >
                             <i  title="Ajouter un clef" class="ti-plus " ></i>
-                            <span style=""> Ajouter un clef</span>
+                            <span style=""> Ajouter une clef</span>
                         </button>
                     </form>
                 </div>
