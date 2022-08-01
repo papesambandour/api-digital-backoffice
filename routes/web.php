@@ -5,7 +5,7 @@ use App\Http\Controllers\Partners\ConfigurationController;
 use App\Http\Controllers\Partners\DashboardController;
 use App\Http\Controllers\Partners\TransactionsController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\URL;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,6 +16,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+$proxy_url    = getenv('PROXY_URL');
+$proxy_schema = getenv('PROXY_SCHEMA');
+
+if (!empty($proxy_url)) {
+    URL::forceRootUrl($proxy_url);
+}
+
+if (!empty($proxy_schema)) {
+    URL::forceScheme($proxy_schema);
+}
 
 Route::get('/', function () {
     return redirect('/partner');
