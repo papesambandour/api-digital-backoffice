@@ -35,7 +35,8 @@
                     <h4>{{amountState('SUCCESS')}} XOF</h4>
                     <div>
                                                             <span class="f-left m-t-10 text-muted">
-                                                                <i class="text-c-pink f-16 icofont icofont-calendar m-r-10"></i>Journée en cours
+                                                                <i class="text-c-pink f-16 icofont icofont-calendar m-r-10"></i>
+                                                                 {{period()}}
                                                             </span>
                     </div>
                 </div>
@@ -51,7 +52,8 @@
                     <h4>{{amountState('FAILLED')}} XOF</h4>
                     <div>
                                                             <span class="f-left m-t-10 text-muted">
-                                                                <i class="text-c-green f-16 icofont icofont-calendar m-r-10"></i>Journée en cours
+                                                                <i class="text-c-green f-16 icofont icofont-calendar m-r-10"></i>
+                                                                 {{period()}}
                                                             </span>
                     </div>
                 </div>
@@ -67,7 +69,8 @@
                     <h4> {{amountState('PENDING') + amountState('PROCESSING') }} XOF</h4>
                     <div>
                                                             <span class="f-left m-t-10 text-muted">
-                                                                <i class="text-c-yellow f-16 icofont icofont-calendar m-r-10"></i>Journée en cours
+                                                                <i class="text-c-yellow f-16 icofont icofont-calendar m-r-10"></i>
+                                                                {{period()}}
                                                             </span>
                     </div>
                 </div>
@@ -102,11 +105,48 @@
 
         <!-- Email Sent End -->
         <!-- Data widget start -->
+        <form class="col-md-12 col-xl-12">
+            {{--START--}}
+            <div class="form-group row">
+                {{--                 DATE START                --}}
+                <label class="col-sm-2 col-form-label">Date de début</label>
+                <div class="col-sm-2">
+                    <input value="{{request('date_start',gmdate('Y-m-d'))}}" name="date_start" id="date_start" type="date"
+                           class="form-control form-control-normal" placeholder="Date de début">
+                </div>
+                {{--                 DATE START                --}}
+
+                {{--                 DATE START                --}}
+                <label class="col-sm-2 col-form-label">Date de fin</label>
+                <div class="col-sm-2">
+                    <input value="{{request('date_end', gmdate('Y-m-d') )}}" name="date_end" id="date_end" type="date"
+                           class="form-control form-control-normal" placeholder="Date de fin">
+                </div>
+                {{--                 DATE START                --}}
+                <div class="col-sm-2">
+                    <button type="submit"
+                            class="primary-api-digital btn btn-primary btn-outline-primary btn-block"><i
+                            class="icofont icofont-search"></i>Appliquer
+                    </button>
+                </div>
+                <div class="col-sm-2">
+                    <button onclick="window.location.href='/partner'" type="button"
+                            class="success-api-digital btn btn-primary btn-outline-primary btn-block"><i
+                            class="icofont icofont-delete"></i>Journée en cours
+                    </button>
+                </div>
+            </div>
+            {{--END--}}
+        </form>
         <div class="col-md-12 col-xl-12">
             <div class="card project-task">
                 <div class="card-header">
                     <div class="card-header-left ">
-                        <h5>Montant par services Journée {{gmdate('Y-m-d')}}</h5>
+                        <h5>Montant par services entre
+                            {{request('date_start',gmdate('Y-m-d') )}}
+                            et
+                            {{request('date_end',gmdate('Y-m-d'))}}
+                        </h5>
                     </div>
 
                 </div>
@@ -132,17 +172,16 @@
                                     </td>
                                     @php
                                     $amount = getAmountTransactionByServices($service->id);
-                                     $percentage =  percentage($amount,$service->id)
+                                     $percentage =  percent(percentage($amount,$service->id));
                                     @endphp
                                     <td style="text-align: center">
-                                        <p class="d-inline-block currency" style="">{{$amount}} <span >XOF</span></p>
+                                        <p class="d-inline-block currency" style="">{{money($amount)}} <span >XOF</span></p>
                                     </td>
-                                    <td style="text-align: center">
+                                    <td style="text-align: center" class="currency">
                                         {{$percentage}} %
                                     </td>
                                     <td style="width: 300px">
                                         <div class="progress d-inline-block" style="width: 100%">
-
 
                                             <div class="progress-bar bg-c-blue"
                                                  role="progressbar" aria-valuemin="0"

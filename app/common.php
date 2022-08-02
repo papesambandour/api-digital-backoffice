@@ -74,18 +74,27 @@ function logoFromName($name): string{
     return $name;
 }
  function getAmountTransactionByServices(int $sousServicesId){
-    return Transactions::where('sous_services_id',$sousServicesId)->whereIn('created_at',[dateFilterStart(gmdate('Y-m-d')),dateFilterEnd(gmdate('Y-m-d'))])->where('statut','SUCCESS')->sum('amount');
+    return Transactions::where('sous_services_id',$sousServicesId)->whereBetween('created_at',[
+        dateFilterStart(request('date_start',gmdate('Y-m-d'))),
+        dateFilterEnd(request('date_end',gmdate('Y-m-d')))
+    ])->where('statut','SUCCESS')->sum('amount');
 }
  function percentage($amount,int $sousServicesId): float|int
  {
-    return  (($amount ?: 1) / (Transactions::where('sous_services_id',$sousServicesId)
-                    ->whereIn('created_at',[dateFilterStart(gmdate('Y-m-d')),dateFilterEnd(gmdate('Y-m-d'))])
+    return  (($amount) / (Transactions::where('sous_services_id',$sousServicesId)
+                    ->whereBetween('created_at',[
+                        dateFilterStart(request('date_start',gmdate('Y-m-d'))),
+                        dateFilterEnd(request('date_end',gmdate('Y-m-d')))
+                    ])
                     ->where('parteners_id',_auth()['parteners_id'])->where('statut','FAILLED')->sum('amount') + ($amount ?: 1) )) * 100;
 }
 
  function amountState($status): float|int
  {
-    return  Transactions::whereIn('created_at',[dateFilterStart(gmdate('Y-m-d')),dateFilterEnd(gmdate('Y-m-d'))])
+    return  Transactions::whereBetween('created_at',[
+        dateFilterStart(request('date_start',gmdate('Y-m-d'))),
+        dateFilterEnd(request('date_end',gmdate('Y-m-d')))
+    ])
                     ->where('parteners_id',_auth()['parteners_id'])->where('statut',$status)->sum('amount') ;
 }
 function loginUser(\App\Models\Parteners $partner):void{
@@ -123,5 +132,30 @@ function checkAuth(): bool
 }
 function nowIso(): string
 {
-    return gmdate("H-m-d H:i:s");
+    return gmdate("Y-m-d H:i:s");
+}
+
+function dateIso(DateTime $date,$format='Y-m-d' ): string
+{
+    return $date->format($format);
+}
+function money($number): string{
+  return  number_format($number,'2','.',' ');
+}
+function percent($number): string{
+  return  number_format($number,'2','.',' ');
+}
+
+function period(): string
+{
+    $start= request('date_start', gmdate('Y-m-d')  );
+    $end= request('date_end', gmdate('Y-m-d'));
+    if($start === $end && $end === gmdate('Y-m-d')){
+        return  "Journée en cours";
+    }
+    return dateFr($start). ' - ' . dateFr($end);
+}
+function dateFr(string $date): string
+{
+    return implode('-',array_reverse(explode('-',$date)));
 }

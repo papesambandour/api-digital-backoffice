@@ -166,6 +166,14 @@ h2{
     background: #ffb64d !important;
     color: #fff !important;
 }
+.success-api-digital{
+    color: #93be52 !important;
+    border-color: #93be52 !important;
+}
+.success-api-digital:hover{
+    background: #93be52 !important;
+    color: #fff !important;
+}
 /******************************SELECT2**********************************/
 
 /******************************SELECT2****************************/

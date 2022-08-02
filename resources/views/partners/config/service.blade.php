@@ -39,10 +39,10 @@
                         <form>
                             <div class="form-group row">
                                 {{--                 DATE START                --}}
-                                <label class="col-sm-2 col-form-label">Date de debut</label>
+                                <label class="col-sm-2 col-form-label">Date de début</label>
                                 <div class="col-sm-2">
                                     <input value="{{$date_start}}" name="date_start" id="date_start" type="date"
-                                           class="form-control form-control-normal" placeholder="Date de debut">
+                                           class="form-control form-control-normal" placeholder="Date de début">
                                 </div>
                                 {{--                 DATE START                --}}
 

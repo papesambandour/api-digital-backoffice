@@ -50,7 +50,8 @@ class ConfigServices
             'app_key' => GUID(),
         ]);
     }
-    public function regenerateKey($idKey){
+    public function regenerateKey($idKey): PartenerComptes
+    {
         /**
          * @var PartenerComptes $partenerComptes
         */
