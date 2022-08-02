@@ -12,7 +12,7 @@ class TransactionServices
     public function paginate(): LengthAwarePaginator
     {
       //  dd(request('sous_services_id'));
-        $transactions = Transactions::query()->orderBy('id','DESC');
+        $transactions = Transactions::query()->orderBy('id','DESC')->where('parteners_id',_auth()['parteners_id']);
         if(request('statut')){
             $transactions->where('statut',request('statut'));
         }
