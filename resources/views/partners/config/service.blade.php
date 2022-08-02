@@ -80,6 +80,7 @@
                             <tr>
                                 <th># Id</th>
                                 <th>Libelle</th>
+                                <th>Type Service</th>
                                 <th>Date</th>
                             </tr>
                             </thead>
@@ -91,7 +92,8 @@
                                             {{$sousService->id}}
                                         </span>
                                     </th>
-                                    <td> <span class="currency"> {{ $sousService->name }} </span> </td>
+                                    <td class="text-left"> <span class="currency"> {{ $sousService->name }} </span> </td>
+                                    <td class="text-left"> <span class="currency"> {{ $sousService->typeService->name }} </span> </td>
 
                                     <td>
                                         {{ $sousService->created_at }}

@@ -108,7 +108,7 @@
                                             {{$apisKey->id}}
                                         </span>
                                     </th>
-                                    <td> <span class="currency"> {{ $apisKey->name }} </span> </td>
+                                    <td class="text-left"> <span class="currency " style="text-align: left !important;"> {{ $apisKey->name }} </span> </td>
 
                                     <td>
                                         <span class="currency" style="font-size: 25px">
