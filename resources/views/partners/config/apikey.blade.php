@@ -32,7 +32,7 @@
                 <div class="col-lg-4">
                     <form id="addKey" style=" float: right" action="/partner/apikey/addkey" method="POST">
                         @csrf
-                        <button onclick='confirm("Voulez-vous ajouter un nouveau clef API ?") === true ? document.getElementById("addKey").submit() : "" ' type="button" class="primary-api-digital btn btn-primary btn-outline-primary btn-block " >
+                        <button onclick='addKey("addKey")' type="button" class="primary-api-digital btn btn-primary btn-outline-primary btn-block " >
                             <i  title="Ajouter un clef" class="ti-plus " ></i>
                             <span style=""> Ajouter une clé</span>
                         </button>
@@ -117,12 +117,12 @@
 
                                     </td>
                                     <td style="width: 200px">
-                                        <i onclick='alert("{{$apisKey->app_key}}")' title="Voir le clef API" class="ti-eye " style="font-size: 25px;cursor: pointer;padding: 5px"></i>
+                                        <i onclick='showKey("{{$apisKey->app_key}}","{{$apisKey->name}}")' title="Voir le clef API" class="ti-eye " style="font-size: 25px;cursor: pointer;padding: 5px"></i>
 
                                         <form id="{{$apisKey->id}}" style="display: inline" action="/partner/apikey/regenerateKey/{{$apisKey->id}}" method="POST">
                                             @csrf
                                             <button type="button" style="margin: 0; padding: 0;border: none;background: transparent ">
-                                                <i onclick='confirm("Voulez-vous régénérer votre clef API ?") === true ? document.getElementById("{{$apisKey->id}}").submit() : "" ' title="Régénérer votre clef API " class="ti-reload " style="color: #fc6180;font-size: 25px;cursor: pointer; padding: 5px"></i>
+                                                <i onclick='regenerateAppKey("{{$apisKey->id}}")'  title="Régénérer votre clef API " class="ti-reload " style="color: #fc6180;font-size: 25px;cursor: pointer; padding: 5px"></i>
                                             </button>
                                         </form>
                                     </td>
@@ -151,7 +151,44 @@
 @endsection
 
 @section('js')
-
+<script>
+    function showKey(appKey,appName) {
+        Notiflix
+            .Report
+            .info(
+                appName,
+                `<br>${appKey}<br>`,
+                'FERMER',
+                {
+                    svgSize: '42px',
+                    messageMaxLength: appKey.length,
+                    plainText: true,
+                },
+            );
+    }
+    function regenerateAppKey(idForm) {
+        let msg='Voulez-vous régénération votre clé API ?';
+        Notiflix
+            .Confirm
+            .show('Régénération clé API ',msg,
+                'Oui',
+                'Non',
+                () => {document.getElementById(idForm).submit()},
+                () => {console.log('If you say so...');},
+                { messageMaxLength: msg.length + 90,},);
+    }
+    function addKey(idForm) {
+        let msg='Voulez-vous ajouter un nouveau clef API ?';
+        Notiflix
+            .Confirm
+            .show('Ajout clé API ',msg,
+                'Oui',
+                'Non',
+                () => {document.getElementById(idForm).submit()},
+                () => {console.log('If you say so...');},
+                { messageMaxLength: msg.length + 90,},);
+    }
+</script>
 @endsection
 
 @section('css')
