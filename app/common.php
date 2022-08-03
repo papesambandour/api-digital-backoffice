@@ -77,7 +77,7 @@ function logoFromName($name): string{
     return Transactions::where('sous_services_id',$sousServicesId)->whereBetween('created_at',[
         dateFilterStart(request('date_start',gmdate('Y-m-d'))),
         dateFilterEnd(request('date_end',gmdate('Y-m-d')))
-    ])->where('statut','SUCCESS')->sum('amount')->where('parteners_id',_auth()['parteners_id']);
+    ])->where('statut','SUCCESS')->where('parteners_id',_auth()['parteners_id'])->sum('amount');
 }
  function percentage($amount,int $sousServicesId): float|int
  {
