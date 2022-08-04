@@ -162,8 +162,8 @@
                                     <td class="currency">{{ $transaction->fee_amount }} <span>XOF</span></td>
                                     <td>{{ $transaction->sous_service_name }}</td>
                                     <td>
-                                        <span class="{{status($transaction->statut)}}">
-                                        {{ $transaction->statut }}
+                                        <span class="{{status($transaction->{STATUS_TRX_NAME})}}">
+                                        {{ $transaction->{STATUS_TRX_NAME} }}
                                         </span>
                                         <details>
                                             <summary>voir message</summary>
