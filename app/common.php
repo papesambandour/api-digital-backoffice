@@ -77,7 +77,7 @@ function logoFromName($name): string{
     return Transactions::where('sous_services_id',$sousServicesId)->whereBetween('created_at',[
         dateFilterStart(request('date_start',gmdate('Y-m-d'))),
         dateFilterEnd(request('date_end',gmdate('Y-m-d')))
-    ])->where('statut','SUCCESS')->where('parteners_id',_auth()['parteners_id'])->sum('amount');
+    ])->where(STATUS_TRX_NAME,'SUCCESS')->where('parteners_id',_auth()['parteners_id'])->sum('amount');
 }
  function percentage($amount,int $sousServicesId): float|int
  {
@@ -86,7 +86,7 @@ function logoFromName($name): string{
                         dateFilterStart(request('date_start',gmdate('Y-m-d'))),
                         dateFilterEnd(request('date_end',gmdate('Y-m-d')))
                     ])
-                    ->where('parteners_id',_auth()['parteners_id'])->where('statut','FAILLED')->sum('amount') + ($amount ?: 1) )) * 100;
+                    ->where('parteners_id',_auth()['parteners_id'])->where(STATUS_TRX_NAME,'FAILLED')->sum('amount') + ($amount ?: 1) )) * 100;
 }
 
  function amountState($status): float|int
@@ -95,7 +95,7 @@ function logoFromName($name): string{
         dateFilterStart(request('date_start',gmdate('Y-m-d'))),
         dateFilterEnd(request('date_end',gmdate('Y-m-d')))
     ])
-                    ->where('parteners_id',_auth()['parteners_id'])->where('statut',$status)->sum('amount') ;
+                    ->where('parteners_id',_auth()['parteners_id'])->where(STATUS_TRX_NAME,$status)->sum('amount') ;
 }
 function loginUser(\App\Models\Parteners $partner):void{
     session([keyAuth() => $partner]);
@@ -159,3 +159,5 @@ function dateFr(string $date): string
 {
     return implode('-',array_reverse(explode('-',$date)));
 }
+const STATUS_TRX_NAME = 'pre_statut';
+//UPDATE transactions set pre_statut = statut;

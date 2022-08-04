@@ -14,7 +14,7 @@ class TransactionServices
       //  dd(request('sous_services_id'));
         $transactions = Transactions::query()->orderBy('id','DESC')->where('parteners_id',_auth()['parteners_id']);
         if(request('statut')){
-            $transactions->where('statut',request('statut'));
+            $transactions->where(STATUS_TRX_NAME,request('statut'));
         }
         if(request('date_start')){
             $transactions->where('created_at','>=',dateFilterStart(request('date_start')));
