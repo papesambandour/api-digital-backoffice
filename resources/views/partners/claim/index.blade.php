@@ -87,6 +87,18 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+
+                                    <label for="statut" class="col-sm-3 col-form-label">Statut</label>
+                                    <div class="col-sm-3">
+                                        <select  required  name="statut" id="statut"
+                                                 class="form-control form-control-normal" >
+                                            @foreach(array_values(STATUS_CLAIM) as $statutClaim)
+                                                <option @if($statut == $statutClaim) selected @endif value="{{$statutClaim}}">{{claimStatutText($statutClaim)}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+
                                 <div class="col-sm-3">
                                     <button type="submit"
                                             class="primary-api-digital btn btn-primary btn-outline-primary btn-block"><i

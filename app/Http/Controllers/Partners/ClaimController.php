@@ -33,8 +33,13 @@ class ClaimController
         if($transactionId){
             $claims->where('transaction_id',$transactionId);
         }
+        $statut= request('statut');
+
+        if($statut){
+            $claims->where('statut',$statut);
+        }
         $claims = $claims->paginate(size());
-        return view('partners.claim.index',compact('date_end','date_start','claims','ref','transactionId'));
+        return view('partners.claim.index',compact('date_end','date_start','claims','ref','transactionId','statut'));
     }
     public function show(Claim $claim): Factory|View|Application
     {
