@@ -250,3 +250,6 @@ li.page-item > a:hover{
     background: #4680ff !important;
 }
 /******************************TABL****************************/
+.invalid-feedback{
+    display: block !important;
+}

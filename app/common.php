@@ -161,3 +161,17 @@ function dateFr(string $date): string
 }
 const STATUS_TRX_NAME = 'pre_statut';
 //UPDATE transactions set pre_statut = statut;
+
+const STATUS_CLAIM=[
+    'CREATED'=>'CREATED',
+    'OPENED'=>'OPENED',
+    'CLOSED'=>'CLOSED'
+];
+const STATUS_CLAIM_LABEL=[
+    'CREATED'=>'<label style="color: #324960;border: 2px dashed #324960;font-weight: bold;padding: 4px;border-radius: 10px;text-transform: uppercase">Crée </label>',
+    'OPENED'=> '<label style="color: #236320;border: 2px dashed #236320;font-weight: bold;padding: 4px;border-radius: 10px;text-transform: uppercase">Ouvert</label',
+    'CLOSED'=> '<label style="color: #ba6a35;border: 2px dashed #ba6a35;font-weight: bold;padding: 4px;border-radius: 10px;text-transform: uppercase">Fermer</label'
+];
+function claimStatut($status){
+    return @STATUS_CLAIM_LABEL[$status] ?: $status;
+}

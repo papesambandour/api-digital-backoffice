@@ -145,6 +145,7 @@
                                 <th>Services</th>
                                 <th>Statut</th>
                                 <th>Date</th>
+                                <th>Options</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -174,6 +175,19 @@
                                     </td>
                                     <td>
                                         {{ $transaction->created_at }}
+                                    </td>
+                                    <td>
+                                        <div class="btn-group dropdown-split-success">
+
+                                            <button style="background: transparent;color: #4fc3a1;border: none;width: 100%;height: 30px" type="button" class="btn btn-success  dropdown-toggle-split waves-effect waves-light icofont icofont-navigation-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span class="sr-only"></span>
+                                            </button>
+                                            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(113px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item waves-light waves-effect" href="/partner/claim/create?trx={{base64_encode($transaction->id)}}">Reclamation</a>
+                                            </div>
+                                        </div>
+
                                     </td>
                                 </tr>
                             @endforeach

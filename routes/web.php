@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Partners\AuthPartnersController;
+use App\Http\Controllers\Partners\ClaimController;
 use App\Http\Controllers\Partners\ConfigurationController;
 use App\Http\Controllers\Partners\DashboardController;
 use App\Http\Controllers\Partners\TransactionsController;
@@ -57,4 +58,8 @@ Route::group(['middleware'=>['partner-auth'],'prefix'=>'partner'],function(){
     Route::post('/apikey/regenerateKey/{idKey}',[ConfigurationController::class,'regenerateKey'] );
     Route::get('/reclamation',[ConfigurationController::class,'reclamation'] );
     /*CONFIGURATIONS END*/
+
+    /*CLAIM START*/
+    Route::resource('/claim', ClaimController::class)->only(['index','store','create','delete','update','edit','show']);
+    /*CLAIM END*/
 });

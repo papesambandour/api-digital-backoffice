@@ -49,6 +49,13 @@
                     <span class="pcoded-mcaret"></span>
                 </a>
             </li>
+            <li class="active">
+                <a href="/partner/claim">
+                    <span class="pcoded-micon"><i class="ti-direction-alt"></i><b>D</b></span>
+                    <span class="pcoded-mtext" >Réclamation</span>
+                    <span class="pcoded-mcaret"></span>
+                </a>
+            </li>
         </ul>
         <div class="pcoded-navigatio-lavel" >Configurations</div>
         <ul class="pcoded-item pcoded-left-item">
