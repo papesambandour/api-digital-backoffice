@@ -159,6 +159,9 @@
                                             <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(113px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
                                                 <div class="dropdown-divider"></div>
                                                 <a class="dropdown-item waves-light waves-effect" href="/partner/claim/{{$claim->id}}">Details</a>
+                                                @if($claim->statut == STATUS_CLAIM['CREATED'])
+                                                <a class="dropdown-item waves-light waves-effect" href="/partner/claim/{{$claim->id}}/edit">Modifier</a>
+                                                @endif
                                             </div>
                                         </div>
 

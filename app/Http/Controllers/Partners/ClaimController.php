@@ -49,6 +49,10 @@ class ClaimController
         }
         return view('partners.claim.add',compact('transaction_id'));
     }
+    public function edit(Claim $claim)
+    {
+        return view('partners.claim.edit',compact('claim'));
+    }
     public function store(Request $request)
     {
        $data =  $request->validate([
@@ -79,6 +83,16 @@ class ClaimController
             'parteners_id'=>_auth()['parteners_id'],
         ]);
         return redirect('/partner/claim')->with('success','Réclamation ajouter avec succès');
+    }
+    public function update($id,Request $request)
+    {
+       $data =  $request->validate([
+            'message' =>'required|min:10',
+            'subject' =>'required|min:5',
+        ]);
+        $claim = Claim::find($id);
+        $claim->update($data);
+        return redirect('/partner/claim')->with('success','Réclamation mise a jour succès');
     }
 
 }

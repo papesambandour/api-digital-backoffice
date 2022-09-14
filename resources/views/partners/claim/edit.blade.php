@@ -3,7 +3,11 @@
 @endsection
 
 @extends('layouts.main')
-
+<?php
+/**
+ * @var \App\Models\Claim $claim ;
+ */
+?>
 @section('page')
     @if (count($errors) > 0)
         <div class="alert alert-danger">
@@ -30,8 +34,8 @@
                     <div class="page-header-title">
                         <i class="icofont icofont-table bg-c-blue"></i>
                         <div class="d-inline">
-                            <h4>Ajout Réclamation</h4>
-                            <span>Donne la possibility d'ajouter une Réclamation   </span>
+                            <h4>Modifier une Réclamation</h4>
+                            <span>Donne la possibility de modifier la Réclamation   </span>
                         </div>
                     </div>
                 </div>
@@ -47,14 +51,14 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-block">
-                        <form method="POST" action="/partner/claim" onsubmit="document.getElementById('submit_claim').setAttribute('disabled', 'disabled')">
+                        <form method="POST" action="/partner/claim/{{$claim->id}}" onsubmit="document.getElementById('submit_claim').setAttribute('disabled', 'disabled')">
                             @csrf
-                            <input type="hidden" value="{{$transaction_id}}" name="transaction_id" id="transaction_id">
+                            @method('put')
                   {{-- #############################################FILED ############################## --}}
                             <div class="form-group row">
                                 <label for="subject" class="col-sm-3 col-form-label">Sujet</label>
                                 <div class="col-sm-3">
-                                    <input required  value="{{old('subject')}}" name="subject" id="subject" type="text"
+                                    <input required  value="{{$claim->subject}}" name="subject" id="subject" type="text"
                                            class="form-control form-control-normal" placeholder="Sujet">
                                     @error('subject')
                                     <div  class="invalid-feedback ">
@@ -71,7 +75,7 @@
                                 <label for="message" class="col-sm-3 col-form-label">Message</label>
                                 <div class="col-sm-3">
                                     <textarea rows="10" required  name="message" id="message"
-                                              class="form-control form-control-normal" placeholder="Message">{{old('message')}}</textarea>
+                                              class="form-control form-control-normal" placeholder="Message">{{$claim->message}}</textarea>
                                     @error('message')
                                     <div  class="invalid-feedback ">
                                         {{ $message }}
