@@ -39,6 +39,7 @@ h2{
 .fl-table td, .fl-table th {
     text-align: center;
     padding: 8px;
+    white-space: initial !important;
 }
 .fl-table td:nth-child(1), .fl-table th:nth-child(1) {
     text-align: left;
@@ -253,3 +254,4 @@ li.page-item > a:hover{
 .invalid-feedback{
     display: block !important;
 }
+

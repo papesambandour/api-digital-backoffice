@@ -24,6 +24,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $created_at
  * @property string $updated_at
  * @property Transactions $transaction
+ * @property string $opened_at
+ * @property string $close_at
+ * @property Users $userOpened
+ * @property Users $userClosed
+ * @property Users $userComment
  */
 class Claim extends Model
 {
@@ -31,8 +36,17 @@ class Claim extends Model
     public function transaction():Attribute{
         return Attribute::make(fn()=> Transactions::find($this->transaction_id));
     }
+    public function userOpened():Attribute{
+        return Attribute::make(fn()=> Users::find($this->user_id_open));
+    }
+    public function userClosed():Attribute{
+        return Attribute::make(fn()=> Users::find($this->user_id_close));
+    }
+    public function userComment():Attribute{
+        return Attribute::make(fn()=> Users::find($this->user_id_comment));
+    }
     /**
      * @var array
      */
-    protected $fillable = ['subject', 'state', 'created_at', 'updated_at', 'claim_ref', 'message', 'comment', 'callback_url', 'statut','parteners_id','user_id_open','user_id_close','user_id_comment','transaction_id'];
+    protected $fillable = ['close_at','opened_at','subject', 'state', 'created_at', 'updated_at', 'claim_ref', 'message', 'comment', 'callback_url', 'statut','parteners_id','user_id_open','user_id_close','user_id_comment','transaction_id'];
 }

@@ -90,8 +90,9 @@
 
                                     <label for="statut" class="col-sm-3 col-form-label">Statut</label>
                                     <div class="col-sm-3">
-                                        <select  required  name="statut" id="statut"
+                                        <select    name="statut" id="statut"
                                                  class="form-control form-control-normal" >
+                                            <option value="" >---</option>
                                             @foreach(array_values(STATUS_CLAIM) as $statutClaim)
                                                 <option @if($statut == $statutClaim) selected @endif value="{{$statutClaim}}">{{claimStatutText($statutClaim)}}</option>
                                             @endforeach
@@ -145,7 +146,7 @@
                                         </span>
                                     </th>
                                     <td class="text-center"><span class="currency"> {{ $claim->subject }} </span> </td>
-                                    <td class="text-center">{{$claim->message}} </td>
+                                    <td class="text-center"> {{substr($claim->message,0,100)}}... </td>
                                     <td class="text-center">
                                         <span class="currency"> #{{ $claim->transaction_id }} </span>
                                     </td>

@@ -15,7 +15,7 @@ class ClaimController
 {
     public function index(): Factory|View|Application
     {
-        $claims = Claim::query();
+        $claims = Claim::query()->where('parteners_id',_auth()['parteners_id']);
         $date_start= request('date_start');
         if($date_start){
             $claims->where('created_at','>=',$date_start);
