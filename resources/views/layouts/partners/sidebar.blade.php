@@ -73,13 +73,13 @@
                     <span class="pcoded-mcaret"></span>
                 </a>
             </li>
-            <li class="active">
-                <a href="/partner/reclamation">
-                    <span class="pcoded-micon"><i class="ti-direction-alt"></i><b>D</b></span>
-                    <span class="pcoded-mtext" >Réclamations</span>
-                    <span class="pcoded-mcaret"></span>
-                </a>
-            </li>
+{{--            <li class="active">--}}
+{{--                <a href="/partner/reclamation">--}}
+{{--                    <span class="pcoded-micon"><i class="ti-direction-alt"></i><b>D</b></span>--}}
+{{--                    <span class="pcoded-mtext" >Réclamations</span>--}}
+{{--                    <span class="pcoded-mcaret"></span>--}}
+{{--                </a>--}}
+{{--            </li>--}}
         </ul>
 
 {{--        <div class="pcoded-navigatio-lavel" data-i18n="nav.category.other">Other</div>--}}
