@@ -43,6 +43,19 @@ class ClaimController
     }
     public function show(Claim $claim): Factory|View|Application
     {
+       /* $ticket = $claim;
+        $message   = "Ticket numéro :  ";
+        $message .= $ticket->claim_ref ;
+        $message .=  ".\nMotif : ";
+        $message .= $ticket->subject;
+        $message .=  ".\nMessage réclamation :\n";
+        $message .= $ticket->message;
+        $message .= ".\nNuméro client:";
+        $message .=  $ticket->transaction->phone;
+        $message .= ".\nMontant transaction: ";
+        $message .= $ticket->transaction->amount." FCFA";
+        $res =notificationTicket($message,'DISCORD','RECLAMATION TRANSACTION',true);
+        dd($message);*/
         return view('partners.claim.show',compact('claim'));
     }
     public function create()
@@ -80,13 +93,31 @@ class ClaimController
        }
        $lastClaim= str_pad($lastClaim,$length,'0',STR_PAD_LEFT);
        $lastClaim = "P" . _auth()['parteners_id'] . "-" . $lastClaim;
-        Claim::create([
+        /**
+         * @var Claim $ticket
+         */
+       $ticket= Claim::create([
             'message' =>$data['message'],
             'subject' =>$data['subject'],
             'transaction_id' =>$data['transaction_id'],
             'claim_ref'=>$lastClaim,
             'parteners_id'=>_auth()['parteners_id'],
         ]);
+        $message   = "Ticket numéro :  ";
+        $message .= $ticket->claim_ref ;
+        $message .=  ".\nMotif : ";
+        $message .= $ticket->subject;
+        $message .=  ".\nMessage réclamation :\n";
+        $message .= $ticket->message;
+        $message .= ".\nNuméro client:";
+        $message .=  $ticket->transaction->phone;
+        $message .= ".\nMontant transaction: ";
+        $message .= $ticket->transaction->amount." FCFA";
+        $message .= ".\nService : ";
+        $message .= $ticket->transaction->sous_service_name;
+        $message .= ".\nType operation : ";
+        $message .= $ticket->transaction->type_operation;
+        $res =notificationTicket($message,'DISCORD','RECLAMATION TRANSACTION',true);
         return redirect('/partner/claim')->with('success','Réclamation ajouter avec succès');
     }
     public function update($id,Request $request)

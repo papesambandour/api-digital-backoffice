@@ -5,7 +5,9 @@ namespace App\Services\Partners\Metier;
 use App\Models\OperationParteners;
 use App\Models\SousServices;
 use App\Models\Transactions;
+use App\Services\Helpers\Utils;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Http;
 
 class TransactionServices
 {
@@ -81,5 +83,7 @@ class TransactionServices
         }
         return  $query->orderBy('id','DESC')->paginate(size());
     }
+
+
 
 }

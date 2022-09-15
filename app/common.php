@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Transactions;
+use Illuminate\Support\Facades\Http;
 use JetBrains\PhpStorm\ArrayShape;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -182,4 +183,18 @@ function claimStatut($status){
 }
 function claimStatutText($status){
     return @STATUS_CLAIM_LABEL_TEXT[$status] ?: $status;
+}
+ function notificationTicket($message,$canal,$even,$isCritic= false): bool
+{
+
+    $rest = Http::withHeaders([
+        'apikey'=>env('SECRETE_API_DIGITAL')
+    ])->post(env('API_DIGITAL_URL') . '/api/v1.0/partner/notification/send',
+        ["channel"=> $canal, "message" => $message, "event"=> $even , "isCritic"=>$isCritic]
+    );
+    if($rest->status() === 201){
+        return true;
+    }else{
+        return false;
+    }
 }
