@@ -70,6 +70,20 @@ class TransactionsController extends Controller
         $sousServices= getSousServiceCashOut($transaction->sousService);
         return view('partners.transaction.retro',compact('transaction','sousServices'));
     }
+
+    public static function getErrorMessage($responseData): string{
+        $message = '';
+        try {
+            $response = @$responseData->apiResponse;
+            $firstKey = @array_keys((array)$response->data)[0];
+            $message = @$response->data->$firstKey[0] ?? "";
+        } catch (Exception $e) {
+        }
+
+        return $response->message.' '. $message;
+    }
+
+
     public function retroSave(int $transactionId)
     {
         /**
@@ -86,7 +100,7 @@ class TransactionsController extends Controller
             if($rest->status() === 201 && $resBody['statutTreatment'] === STATUS_TRX['SUCCESS']){
                 return redirect("/partner/transaction")->with('success','La retro transaction  est effectif avec success. Message : '. $resBody['message']);
             }else{
-                return redirect('/partner/transaction')->with('error','Erreur lors de La retro transaction  est effectif. Message : '. $resBody['message']);
+                return redirect('/partner/transaction')->with('error','Erreur lors de La retro transaction  est effectif. Message : '. TransactionsController::getErrorMessage($resBody));
             }
         }
         return  redirect('/partner/transaction')->with('error','La retro Transaction ne peut pas être effectué.');
