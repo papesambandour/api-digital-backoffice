@@ -101,7 +101,7 @@ class TransactionsController extends Controller
             ->where('id', (int)base64_decode($transactionId))
             ->where('parteners_id',_auth()['parteners_id'])->first();
         // return redirect()->back()->with('success','Transaction rembourser avec success');
-        if(checkRefundable($transaction) || 1   ){
+        if($transaction &&checkRefundable($transaction)   ){
             $rest = Http::withHeaders([
                 'apikey'=>env('SECRETE_API_DIGITAL')
             ])->post(env('API_DIGITAL_URL') . '/api/v1.0/partner/transaction/refund',

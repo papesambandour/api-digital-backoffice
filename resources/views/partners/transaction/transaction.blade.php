@@ -198,7 +198,7 @@
                                                 <a class="dropdown-item waves-light waves-effect" href="/partner/transaction/retro/{{$transaction->id}}">Retro transaction</a>
                                                 @endif
                                                 <a class="dropdown-item waves-light waves-effect" href="/partner/claim/create?trx={{base64_encode($transaction->id)}}">Reclamation</a>
-                                                @if(checkRefundable($transaction) || 1 )
+                                                @if(checkRefundable($transaction)  )
                                                     <a style="cursor: pointer" class="dropdown-item waves-light waves-effect" onclick='refund("{{base64_encode($transaction->id)}}")' >Rembourser la transaction</a>
                                                 @endif
                                             </div>
