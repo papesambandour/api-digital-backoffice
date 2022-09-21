@@ -12,6 +12,16 @@
 @section('page')
 
     <div class="page-wrapper">
+        <div class="col-md-12">
+            @if(Session::has('success'))
+                <p class="alert alert-success">{{ Session::get('success') }}</p>
+            @endif
+        </div>
+        <div class="col-md-12">
+            @if(Session::has('error'))
+                <p class="alert alert-danger">{{ Session::get('error') }}</p>
+            @endif
+        </div>
         <!-- Page-header start -->
         <div class="page-header card">
             <div class="row align-items-end">
@@ -184,7 +194,13 @@
                                             </button>
                                             <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(113px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
                                                 <div class="dropdown-divider"></div>
+                                                @if(retroTransaction($transaction))
+                                                <a class="dropdown-item waves-light waves-effect" href="/partner/transaction/retro/{{$transaction->id}}">Retro transaction</a>
+                                                @endif
                                                 <a class="dropdown-item waves-light waves-effect" href="/partner/claim/create?trx={{base64_encode($transaction->id)}}">Reclamation</a>
+                                                @if(checkRefundable($transaction) || 1 )
+                                                    <a style="cursor: pointer" class="dropdown-item waves-light waves-effect" onclick='refund("{{base64_encode($transaction->id)}}")' >Rembourser la transaction</a>
+                                                @endif
                                             </div>
                                         </div>
 
@@ -216,8 +232,16 @@
             $('#statut').select2();
         });
 
+       function refund(id){
+            if(confirm('Êtes-vous sûr de vouloir rembourser ?')){
+            window.location.href = "/partner/transaction/reFund/" + id;
+           }
+        }
+
     </script>
 @endsection
 
 @section('css')
 @endsection
+
+

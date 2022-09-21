@@ -46,6 +46,9 @@ Route::group(['middleware'=>['partner-auth'],'prefix'=>'partner'],function(){
     /*REPORTING START*/
 
     /*TRANSACTION START*/
+    Route::get('/transaction/retro/{transaction}',[TransactionsController::class,'retro'] );
+    Route::post('/transaction/retro/{transaction}',[TransactionsController::class,'retroSave'] );
+    Route::get('/transaction/reFund/{transaction}',[TransactionsController::class,'reFund'] );
     Route::get('/transaction',[TransactionsController::class,'transaction'] );
     Route::get('/versement',[TransactionsController::class,'versement'] );
     Route::get('/mvm-compte',[TransactionsController::class,'mvmCompte'] );

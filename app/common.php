@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\SousServices;
 use App\Models\Transactions;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Http;
 use JetBrains\PhpStorm\ArrayShape;
 use Psr\Container\ContainerExceptionInterface;
@@ -197,4 +199,39 @@ function claimStatutText($status){
     }else{
         return false;
     }
+}
+const TYPE_SERVICES = [
+    'CASHOUT'=>'CASHOUT',
+    'CASHIN'=>'CASHIN',
+];
+const STATUS_TRX=[
+    'SUCCESS'=>'SUCCESS','PENDING'=>'PENDING','PROCESSING'=>'PROCESSING','FAILLED'=>'FAILLED','CANCELED'=>'CANCELED'
+];
+function retroTransaction(Transactions $transaction): bool
+{
+    return
+        ($transaction->statut == STATUS_TRX['SUCCESS'])
+        && $transaction->sousService->typeService->code === TYPE_SERVICES['CASHIN'];
+}
+
+function getSousServiceCashOut(SousServices $sousServices): Collection|array
+{
+    return SousServices::query()
+        ->whereHas('typeService',function ($query) use ($sousServices){
+            $query->where('code', TYPE_SERVICES['CASHIN']);
+        })->whereHas('service',function ($query) use ($sousServices){
+            $query->whereHas('operator',function ($query2) use ($sousServices){
+                $query2->where('countries_id',$sousServices->service->operator->countries_id);
+            });
+        })->get();
+}
+const TYPE_OPERATION =[
+    'DEBIT'=>'DEBIT',
+    'CREDIT'=>'CREDIT'
+];
+function checkRefundable(Transactions $transaction): bool
+{
+    return $transaction->statut == STATUS_TRX['SUCCESS']
+        && $transaction->type_operation === TYPE_OPERATION['DEBIT']
+        && $transaction->sousService->typeService->code === TYPE_SERVICES['CASHOUT'];
 }

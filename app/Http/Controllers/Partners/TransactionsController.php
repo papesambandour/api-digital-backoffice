@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Partners;
 
 use App\Http\Controllers\Controller;
+use App\Models\Transactions;
 use App\Services\Partners\Metier\ConfigServices;
 use App\Services\Partners\Metier\TransactionServices;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Http;
 
 class TransactionsController extends Controller
 {
@@ -59,6 +61,63 @@ class TransactionsController extends Controller
         $amount_min = request('amount_min');
         $amount_max = request('amount_max');
         return view('partners/transaction.mvm-compte',compact('mouvements','amount_min','amount_max','date_end','date_start',));
+    }
+    public function retro(int $transactionID){
+        /**
+         * @var Transactions $transaction
+         */
+        $transaction = Transactions::find($transactionID);
+        $sousServices= getSousServiceCashOut($transaction->sousService);
+        return view('partners.transaction.retro',compact('transaction','sousServices'));
+    }
+    public function retroSave(int $transactionId)
+    {
+        /**
+         * @var Transactions $transaction
+         */
+        $transaction = Transactions::find($transactionId);
+        if(retroTransaction($transaction)  ){
+            $rest = Http::withHeaders([
+                'apikey'=>env('SECRETE_API_DIGITAL')
+            ])->post(env('API_DIGITAL_URL') . '/api/v1.0/partner/transaction/retro',
+                ['transactionId'=>$transaction->id, 'codeService'=>$transaction->code_sous_service]
+            );
+            $resBody = (array) $rest->object();
+            if($rest->status() === 201 && $resBody['statutTreatment'] === STATUS_TRX['SUCCESS']){
+                return redirect("/partner/transaction")->with('success','La retro transaction  est effectif avec success. Message : '. $resBody['message']);
+            }else{
+                return redirect('/partner/transaction')->with('error','Erreur lors de La retro transaction  est effectif. Message : '. $resBody['message']);
+            }
+        }
+        return  redirect('/partner/transaction')->with('error','La retro Transaction ne peut pas être effectué.');
+    }
+
+    public function reFund(string $transactionId)
+    {
+        /**
+         * @var Transactions $transaction
+         */
+        $transaction = Transactions::query()
+            ->where('id', (int)base64_decode($transactionId))
+            ->where('parteners_id',_auth()['parteners_id'])->first();
+        // return redirect()->back()->with('success','Transaction rembourser avec success');
+        if(checkRefundable($transaction) || 1   ){
+            $rest = Http::withHeaders([
+                'apikey'=>env('SECRETE_API_DIGITAL')
+            ])->post(env('API_DIGITAL_URL') . '/api/v1.0/partner/transaction/refund',
+                ['transactionId'=>$transaction->id]
+            );
+            $resBody = (array) $rest->object();
+            if($rest->status() === 201 && $resBody['status'] === STATUS_TRX['SUCCESS']){
+                return redirect()->back()->with('success','Transaction rembourser avec success. Message : '. $resBody['message']);
+            }else{
+                return redirect()->back()->with('error','Erreur lors du remboursement de la Transaction. Message : '. $resBody['message']);
+            }
+        }
+        return redirect()->back()->with('error','La transaction n\'est pas remboursable');
+
+        //dump($rest->status());
+        // dd($rest->body());
     }
 
 }
