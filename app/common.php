@@ -211,7 +211,7 @@ function retroTransaction(Transactions $transaction): bool
 {
     return
         ($transaction->statut == STATUS_TRX['SUCCESS'])
-        && $transaction->sousService->typeService->code === TYPE_SERVICES['CASHIN'];
+        && $transaction->sousService->typeService->code === TYPE_SERVICES['CASHOUT'];
 }
 
 function getSousServiceCashOut(SousServices $sousServices): Collection|array
