@@ -150,6 +150,7 @@
                                 <th>Transaction Id</th>
                                 <th>Numéro </th>
                                 <th>Montant</th>
+                                <th>Type Operation</th>
                                 <th>Commission</th>
                                 <th>Frais</th>
                                 <th>Services</th>
@@ -169,6 +170,7 @@
                                     </th>
                                     <td>{{ $transaction->phone }} </td>
                                     <td class="currency">{{ $transaction->amount }} <span>XOF</span></td>
+                                    <td> <span class="statut-success">{{$transaction->type_operation}} </span> </td>
                                     <td class="currency">{{ $transaction->commission_amount }} <span>XOF</span></td>
                                     <td class="currency">{{ $transaction->fee_amount }} <span>XOF</span></td>
                                     <td>{{ $transaction->sous_service_name }}</td>
