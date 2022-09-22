@@ -67,8 +67,8 @@
                                 {{--                 DATE START                --}}
                                 <label class="col-sm-2 col-form-label">Transaction ID</label>
                                 <div class="col-sm-2">
-                                    <input value="{{$external_transaction_id}}" name="external_transaction_id"
-                                           id="external_transaction_id" type="text"
+                                    <input value="{{$search_any_transaction}}" name="search_any_transaction"
+                                           id="search_any_transaction" type="text"
                                            class="form-control form-control-normal" placeholder="Transaction ID">
                                 </div>
                                 {{--                 DATE START                --}}

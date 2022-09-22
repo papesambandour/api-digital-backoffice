@@ -27,8 +27,15 @@ class TransactionServices
         if(request('sous_services_id')){
             $transactions->where('sous_services_id','=',request('sous_services_id'));
         }
-        if(request('external_transaction_id')){
-            $transactions->where('external_transaction_id','like',"%".request('external_transaction_id') . "%");
+        if(request('search_any_transaction')){
+            $transactions->where(function ($query)  {
+                $query
+                    ->where('external_transaction_id','like',"%".request('search_any_transaction') . "%")
+                    ->orWhere('id','like',"%".request('search_any_transaction') . "%")
+                    ->orWhere('transaction_id','like',"%".request('search_any_transaction') . "%")
+                    ->orWhere('sous_service_transaction_id','like',"%".request('search_any_transaction') . "%")
+                ;
+            });
         }
         if(request('phone')){
             $transactions->where('phone','like',"%".request('phone')."%");

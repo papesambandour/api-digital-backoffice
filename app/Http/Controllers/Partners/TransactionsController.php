@@ -37,12 +37,12 @@ class TransactionsController extends Controller
         $statut= request('statut');
         $date_start= request('date_start');
         $date_end= request('date_end');
-        $external_transaction_id= request('external_transaction_id');
+        $search_any_transaction= request('search_any_transaction');
         $statuts = $this->transactions->status() ;
         $phone = request('phone');
         $amount_min = request('amount_min');
         $amount_max = request('amount_max');
-        return view('partners/transaction.transaction',compact('amount_min','amount_max','phone','statuts','external_transaction_id','statut','sous_services_id','date_start','date_end','sous_services','transactions','title','subTitle'));
+        return view('partners/transaction.transaction',compact('amount_min','amount_max','phone','statuts','search_any_transaction','statut','sous_services_id','date_start','date_end','sous_services','transactions','title','subTitle'));
     }
     public function versement(): Factory|View|Application
     {
