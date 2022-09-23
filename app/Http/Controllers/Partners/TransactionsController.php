@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Transactions;
 use App\Services\Partners\Metier\ConfigServices;
 use App\Services\Partners\Metier\TransactionServices;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -72,7 +73,7 @@ class TransactionsController extends Controller
     }
 
     public static function getErrorMessage($responseData): string{
-        return json_encode($responseData);
+        //return json_encode($responseData);
         $message = '';
         try {
             $response = @$responseData->apiResponse;
@@ -81,7 +82,7 @@ class TransactionsController extends Controller
         } catch (Exception $e) {
         }
 
-        return $response->message.' '. $message;
+        return @$response['message'].' '. $message;
     }
 
 
