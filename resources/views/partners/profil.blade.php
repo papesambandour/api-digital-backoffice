@@ -91,7 +91,7 @@
                                    </div>
                                </div>
 
-                               <div class="form-group row">
+                             {{--  <div class="form-group row">
                                    <label class="col-sm-6 col-form-label">Pays</label>
                                    <div class="col-sm-6">
                                        <select  required  name="countries_id" id="countries_id" class="">
@@ -102,7 +102,7 @@
 
                                        </select>
                                    </div>
-                               </div>
+                               </div>--}}
 
 
 
