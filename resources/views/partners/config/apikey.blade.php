@@ -17,6 +17,11 @@
                 <p class="alert alert-success">{{ Session::get('success') }}</p>
             @endif
         </div>
+        <div class="col-md-12">
+            @if(Session::has('error'))
+                <p class="alert alert-danger">{{ Session::get('error') }}</p>
+            @endif
+        </div>
         <div class="page-header card">
             <div class="row align-items-end">
                 <div class="col-lg-8">
@@ -96,8 +101,9 @@
                                 <th># Id</th>
                                 <th>Libelle</th>
                                 <th>Clef</th>
-                                <th>Actions</th>
+                                <th>Statut</th>
                                 <th>Date</th>
+                                <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -116,20 +122,62 @@
                                         </span>
 
                                     </td>
-                                    <td style="width: 200px">
-                                        <i onclick='showKey("{{$apisKey->app_key}}","{{$apisKey->name}}")' title="Voir le clef API" class="ti-eye " style="font-size: 25px;cursor: pointer;padding: 5px"></i>
 
-                                        <form id="{{$apisKey->id}}" style="display: inline" action="/partner/apikey/regenerateKey/{{$apisKey->id}}" method="POST">
-                                            @csrf
-                                            <button type="button" style="margin: 0; padding: 0;border: none;background: transparent ">
-                                                <i onclick='regenerateAppKey("{{$apisKey->id}}")'  title="Régénérer votre clef API " class="ti-reload " style="color: #fc6180;font-size: 25px;cursor: pointer; padding: 5px"></i>
-                                            </button>
-                                        </form>
+                                    <td>
+                                        @if($apisKey->state === STATE['ACTIVED'])
+                                            <span class="statut-success">ACTIF </span>
+                                        @else
+                                            <span class="statut-danger">RÉVOQUÉ </span>
+                                        @endif
                                     </td>
-
                                     <td>
                                         {{ $apisKey->created_at }}
                                     </td>
+                                    <td style="width: 200px">
+                                        <div class="btn-group dropdown-split-success">
+
+                                            <button style="background: transparent;color: #4fc3a1;border: none;width: 100%;height: 30px" type="button" class="btn btn-success  dropdown-toggle-split waves-effect waves-light icofont icofont-navigation-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span class="sr-only"></span>
+                                            </button>
+                                            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(113px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                <div class="dropdown-divider"></div>
+
+
+                                                <a  href="#"  class="dropdown-item waves-light waves-effect" onclick='showKey("{{$apisKey->app_key}}","{{$apisKey->name}}")' title="Voir le clef API">
+                                                    <i  class="ti-eye " ></i> Voir votre clef API
+                                                </a>
+
+                                                <form id="{{$apisKey->id}}" style="display: inline" action="/partner/apikey/regenerateKey/{{$apisKey->id}}" method="POST">
+                                                    @csrf
+                                                    <a  href="#"  style="padding: 5px 17px;font-size: 14px;" class="dropdown-item waves-light waves-effect" onclick='regenerateAppKey("{{$apisKey->id}}")'  title="Régénérer votre clef API " >
+                                                        <i  class="ti-reload " ></i> Régénérer votre clef API
+                                                    </a>
+                                                </form>
+
+                                                <form id="{{$apisKey->id . '_revok'}}" style="display: inline" action="/partner/apikey/revoqKey/{{$apisKey->id}}" method="POST">
+                                                    @csrf
+                                                    <a  href="#"  style="padding: 5px 17px;font-size: 14px;" class="dropdown-item waves-light waves-effect" onclick='revoqAppKey("{{$apisKey->id . '_revok'}}")'  title="Régénérer votre clef API " >
+
+                                                        @if($apisKey->state === STATE['ACTIVED'])
+                                                            <i  class="ti-close " ></i> Révoquer votre clef API
+                                                        @else
+                                                            <i  class="ti-check " ></i> Activer votre clef API
+                                                        @endif
+                                                    </a>
+                                                </form>
+
+                                                <form id="{{$apisKey->id . '_raname'}}" style="display: inline" action="/partner/apikey/raname/{{$apisKey->id}}" method="POST">
+                                                    @csrf
+                                                    <a  href="#"  style="padding: 5px 17px;font-size: 14px;" class="dropdown-item waves-light waves-effect" onclick='renameAppKey("{{$apisKey->id . '_raname'}}", "{{$apisKey->name}}" , "{{$apisKey->id . '_name'}}")'  title="Régénérer votre clef API " >
+                                                        <i  class="ti-more-alt " ></i> Renommé votre clef API
+                                                    </a>
+                                                    <input type="hidden" name="name" id="{{$apisKey->id . '_name'}}">
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </td>
+
+
                                 </tr>
                             @endforeach
                             </tbody>
@@ -175,6 +223,34 @@
                 'Non',
                 () => {document.getElementById(idForm).submit()},
                 () => {console.log('If you say so...');},
+                { messageMaxLength: msg.length + 90,},);
+    }
+    function revoqAppKey(idForm) {
+        let msg='Voulez-vous révoqué votre clé API ?';
+        Notiflix
+            .Confirm
+            .show('Révoqué votre clé API ',msg,
+                'Oui',
+                'Non',
+                () => {document.getElementById(idForm).submit()},
+                () => {console.log('If you say so...');},
+                { messageMaxLength: msg.length + 90,},);
+    }
+    function renameAppKey(idForm,name,idInput) {
+        let msg='Nouveau labelle';
+        Notiflix
+            .Confirm
+            .prompt(
+                'Renommer votre clé API ',
+                msg,
+                name,
+                'Appliquer',
+                'Annuler',
+                (clientAnswer) => {
+                    $(`#${idInput}`).val(clientAnswer);
+                    document.getElementById(idForm).submit()
+                },
+                (clientAnswer) => {console.log('If you say so...');},
                 { messageMaxLength: msg.length + 90,},);
     }
     function addKey(idForm) {

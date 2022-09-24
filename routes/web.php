@@ -60,6 +60,8 @@ Route::group(['middleware'=>['partner-auth'],'prefix'=>'partner'],function(){
     Route::get('/apikey',[ConfigurationController::class,'apikey'] );
     Route::post('/apikey/addkey',[ConfigurationController::class,'addKey'] );
     Route::post('/apikey/regenerateKey/{idKey}',[ConfigurationController::class,'regenerateKey'] );
+    Route::post('/apikey/revoqKey/{idKey}',[ConfigurationController::class,'revoqKey'] );
+    Route::post('/apikey/raname/{idKey}',[ConfigurationController::class,'ranameKey'] );
     Route::get('/reclamation',[ConfigurationController::class,'reclamation'] );
     /*CONFIGURATIONS END*/
 

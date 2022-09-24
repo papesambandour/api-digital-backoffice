@@ -60,5 +60,26 @@ class ConfigServices
         $partenerComptes->save();
         return $partenerComptes;
     }
+    public function revoqKey($idKey): PartenerComptes
+    {
+        /**
+         * @var PartenerComptes $partenerComptes
+        */
+        $partenerComptes  = PartenerComptes::query()->where('parteners_id',_auth()['parteners_id'])->where('id',$idKey)->first();
+        $partenerComptes->state = $partenerComptes->state === STATE['ACTIVED'] ? STATE['INACTIVED'] : STATE['ACTIVED'];
+        $partenerComptes->save();
+        return $partenerComptes;
+    }
+
+    public function renameKey($idKey): PartenerComptes
+    {
+        /**
+         * @var PartenerComptes $partenerComptes
+        */
+        $partenerComptes  = PartenerComptes::query()->where('parteners_id',_auth()['parteners_id'])->where('id',$idKey)->first();
+        $partenerComptes->name = request('name',$partenerComptes->name);
+        $partenerComptes->save();
+        return $partenerComptes;
+    }
 
 }
