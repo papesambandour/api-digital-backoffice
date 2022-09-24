@@ -18,7 +18,7 @@ class UserServices
     {
         $user = user();
         $request->validate(Utils::getRuleModel(new Parteners(),$user->id,$request->all()));
-        $data= $request->only(['name','email','phone','adress']);//
+        $data= $request->only(['name','email','phone','adress','allow_id']);//
         $user->update($data);
         return redirect('/partner/profil')->with('success','Infos utilisateur changer avec succès');
     }
