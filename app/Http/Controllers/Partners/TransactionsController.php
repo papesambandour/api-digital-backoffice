@@ -28,7 +28,7 @@ class TransactionsController extends Controller
         $this->configServices = $configServices;
     }
 
-    public function transaction(): Factory|View|Application
+    public function transaction()
     {
         $transactions = $this->transactions->paginate();
         $title = $this->title;

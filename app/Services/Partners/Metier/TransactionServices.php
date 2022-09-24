@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Http;
 
 class TransactionServices
 {
-    public function paginate(): LengthAwarePaginator
+    public function paginate()
     {
       //  dd(request('sous_services_id'));
         $transactions = Transactions::query()->orderBy('id','DESC')->where('parteners_id',_auth()['parteners_id']);
@@ -46,7 +46,9 @@ class TransactionServices
         if(request('amount_min')){
             $transactions->where('amount','>=',request('amount_min'));
         }
-
+        if(isExportExcel()){
+            die (exportExcel(mappingExportTransaction($transactions->get())));
+        }
         return $transactions->paginate(size());
     }
 

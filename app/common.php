@@ -6,6 +6,8 @@ use App\Models\Transactions;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Http;
 use JetBrains\PhpStorm\ArrayShape;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -241,4 +243,75 @@ function checkRefundable(Transactions $transaction): bool
 function countries(): Collection
 {
     return Country::all();
+}
+
+function exportExcel(array $data ){
+    try {
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        /*SET CONTENT*/
+        $y=1;
+        $alfa = range('A','Z');
+        foreach ($data as $value){
+            $x = 0 ;
+            foreach ($value as $key =>$va){
+                $sheet->setCellValue(@$alfa[$x] . $y, ucfirst($key));
+                $sheet->getColumnDimension(@$alfa[$x])->setAutoSize(true);
+                $x++;
+            }
+
+            $y++ ;
+            break;
+        }
+        foreach ($data as $value){
+            $x = 0 ;
+            foreach ($value as $key =>$va){
+                $sheet->setCellValue(@$alfa[$x] . $y,$va);
+                $sheet->getColumnDimension(@$alfa[$x])->setAutoSize(true);
+                $x++;
+            }
+            $y++ ;
+        }
+        $sheet->getStyle('A:Z')->getAlignment()->setHorizontal('left');
+
+        //  $sheet->setCellValue('A1', 'Hello World !');
+        /*SET CONTENT*/
+        $path = tempnam(sys_get_temp_dir(), '_intech_api_');
+        $writer = new Xlsx($spreadsheet);
+        $writer->save($path);
+        $res = file_get_contents($path);
+        $b64Doc = base64_encode(($res ?: ''));// file
+        unlink($path);
+        return json_encode(['data'=>"data:application/xlsx;base64," . $b64Doc,'msg'=>'exportation ok','error'=>false,'code'=>200]) ;
+    } catch (Exception $e) {
+        die($e->getMessage());
+    }
+}
+/**
+ * @param Collection $transactions
+ * @return array
+ */
+function mappingExportTransaction(Collection $transactions): array
+{
+    return $transactions->map(function(Transactions $transaction){
+        return [
+            'ID'=> $transaction->id,
+            'Transaction Id'=> $transaction->transaction_id,
+            'Numéro'=> $transaction->phone,
+            'Montant'=> $transaction->amount  ,
+            'Type Operation'=> $transaction->type_operation  ,
+            'Partenaire'=> $transaction->partener_name  ,
+            'Commission'=> $transaction->commission_amount ,
+            'Frais'=> $transaction->fee_amount  ,
+            'Services'=> $transaction->sous_service_name  ,
+            'Sous Services'=> $transaction->service_name  ,
+            'Statut'=>  $transaction->{STATUS_TRX_NAME},
+            'Date de creation'=> $transaction->created_at->format('Y-m-d'),
+        ];
+    })->toArray();
+}
+
+function isExportExcel(): bool
+{
+    return !!request('_exported_excel_',false);
 }
