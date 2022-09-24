@@ -48,6 +48,11 @@
                             </a>
                         </li>
                         <li>
+                            <a href="/partner/profil">
+                                <i class="ti-user"></i> Modifier mot de passe
+                            </a>
+                        </li>
+                        <li>
                             <a href="/auth-partner/logout">
                                 <i class="ti-layout-sidebar-left"></i> Se déconnecter
                             </a>

@@ -5,6 +5,7 @@ use App\Http\Controllers\Partners\ClaimController;
 use App\Http\Controllers\Partners\ConfigurationController;
 use App\Http\Controllers\Partners\DashboardController;
 use App\Http\Controllers\Partners\TransactionsController;
+use App\Http\Controllers\Partners\UsersController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 /*
@@ -59,10 +60,16 @@ Route::group(['middleware'=>['partner-auth'],'prefix'=>'partner'],function(){
     Route::get('/apikey',[ConfigurationController::class,'apikey'] );
     Route::post('/apikey/addkey',[ConfigurationController::class,'addKey'] );
     Route::post('/apikey/regenerateKey/{idKey}',[ConfigurationController::class,'regenerateKey'] );
+    Route::post('/apikey/revoqKey/{idKey}',[ConfigurationController::class,'revoqKey'] );
+    Route::post('/apikey/raname/{idKey}',[ConfigurationController::class,'ranameKey'] );
     Route::get('/reclamation',[ConfigurationController::class,'reclamation'] );
     /*CONFIGURATIONS END*/
 
     /*CLAIM START*/
     Route::resource('/claim', ClaimController::class)->only(['index','store','create','delete','update','edit','show']);
     /*CLAIM END*/
+
+    Route::get('/profil', [UsersController::class,'profil']);
+    Route::post('/account', [UsersController::class,'account']);
+    Route::post('/password', [UsersController::class,'password']);
 });
