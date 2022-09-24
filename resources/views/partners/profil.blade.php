@@ -111,15 +111,10 @@
                                       <div class="col-sm-6">
                                           <button id="submit_users"  type="submit"
                                                   class="primary-api-digital btn btn-primary btn-outline-primary btn-block"><i
-                                                  class="icofont icofont-search"></i>Enregistrer
+                                                  class="icofont icofont-save"></i>Enregistrer
                                           </button>
                                       </div>
-                                      <div class="col-sm-6">
-                                          <button onclick="window.location.href='/users'" type="button"
-                                                  class="warning-api-digital btn btn-primary btn-outline-primary btn-block"><i
-                                                  class="icofont icofont-delete"></i>Annuler
-                                          </button>
-                                      </div>
+
 
                                   </div>
 
