@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int $id
@@ -25,13 +26,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property PartenerSettings[] $partenerSettings
  * @property SousServicesParteners[] $sousServicesParteners
  * @property Transactions[] $transactions
+ * @property Country $country
  */
 class Parteners extends Model
 {
     /**
      * @var array
      */
-    protected $fillable = ['created_at', 'updated_at', 'state', 'solde', 'amount_reserved', 'name', 'phone', 'email', 'adress', 'password', 'first_connection', 'password_expired', 'password_duration_day'];
+    protected $fillable = ['countries_id','created_at', 'updated_at', 'state', 'solde', 'amount_reserved', 'name', 'phone', 'email', 'adress', 'password', 'first_connection', 'password_expired', 'password_duration_day'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -79,5 +81,12 @@ class Parteners extends Model
     public function transactions()
     {
         return $this->hasMany('App\Models\Transactions', 'parteners_id');
+    }
+    /**
+     * @return BelongsTo
+     */
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class, 'countries_id');
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Country;
 use App\Models\SousServices;
 use App\Models\Transactions;
 use Illuminate\Database\Eloquent\Collection;
@@ -21,7 +22,9 @@ use Psr\Container\NotFoundExceptionInterface;
         "solde" =>$partner->solde,
     ];
 }
-
+function user(){
+    return \App\Models\Parteners::query()->find(getUser()['id']);
+}
 function title(string $title): string
 {
     return "INTECH API " . $title;
@@ -234,4 +237,8 @@ function checkRefundable(Transactions $transaction): bool
     return $transaction->statut == STATUS_TRX['SUCCESS']
         && $transaction->type_operation === TYPE_OPERATION['CREDIT']
         && $transaction->sousService->typeService->code === TYPE_SERVICES['CASHOUT'];
+}
+function countries(): Collection
+{
+    return Country::all();
 }
