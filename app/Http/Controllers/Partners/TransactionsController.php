@@ -99,8 +99,8 @@ class TransactionsController extends Controller
                 ['transactionId'=>$transaction->id, 'codeService'=>$transaction->code_sous_service]
             );
             $resBody = (array) $rest->object();
-            if($rest->status() === 201 && $resBody['statutTreatment'] === STATUS_TRX['SUCCESS']){
-                return redirect("/partner/transaction")->with('success','La retro transaction  est effectif avec success. Message : '. $resBody['message']);
+            if($rest->status() === 201 && @$resBody['statutTreatment'] === STATUS_TRX['SUCCESS']){
+                return redirect("/partner/transaction")->with('success','La retro transaction  est effectif avec success. Message : '. @$resBody['message']);
             }else{
                 return redirect('/partner/transaction')->with('error','Erreur lors de La retro transaction  est effectif. Message : '. TransactionsController::getErrorMessage($resBody));
             }
@@ -124,10 +124,10 @@ class TransactionsController extends Controller
                 ['transactionId'=>$transaction->id]
             );
             $resBody = (array) $rest->object();
-            if($rest->status() === 201 && $resBody['status'] === STATUS_TRX['SUCCESS']){
-                return redirect()->back()->with('success','Transaction rembourser avec success. Message : '. $resBody['message']);
+            if($rest->status() === 201 && @$resBody['status'] === STATUS_TRX['SUCCESS']){
+                return redirect()->back()->with('success','Transaction rembourser avec success. Message : '. @$resBody['message']);
             }else{
-                return redirect()->back()->with('error','Erreur lors du remboursement de la Transaction. Message : '. $resBody['message']);
+                return redirect()->back()->with('error','Erreur lors du remboursement de la Transaction. Message : '. @$resBody['message']);
             }
         }
         return redirect()->back()->with('error','La transaction n\'est pas remboursable');
