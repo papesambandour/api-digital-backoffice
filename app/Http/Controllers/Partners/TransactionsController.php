@@ -93,7 +93,7 @@ class TransactionsController extends Controller
          */
         $transaction = Transactions::find($transactionId);
         if(retroTransaction($transaction)  ){
-            $rest = Http::withHeaders([
+            $rest = Http::timeout(timeouts())->withHeaders([
                 'apikey'=>env('SECRETE_API_DIGITAL')
             ])->post(env('API_DIGITAL_URL') . '/api/v1.0/partner/transaction/retro',
                 [
