@@ -96,7 +96,11 @@ class TransactionsController extends Controller
             $rest = Http::withHeaders([
                 'apikey'=>env('SECRETE_API_DIGITAL')
             ])->post(env('API_DIGITAL_URL') . '/api/v1.0/partner/transaction/retro',
-                ['transactionId'=>$transaction->id, 'codeService'=> request('codeService')]
+                [
+                    'transactionId'=>$transaction->id,
+                    'codeService'=> request('codeService'),
+                    'amount' => floatval(request('amount')),
+                ]
             );
             $resBody = (array) $rest->object();
             if($rest->status() === 201 && @$resBody['statutTreatment'] === STATUS_TRX['SUCCESS']){

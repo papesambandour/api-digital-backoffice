@@ -70,6 +70,14 @@
                                 </div>
 
                             </div>
+                            <div v-if="typeAction === 'retro'" class="form-group row">
+                                <label class="col-sm-12 col-form-label">Montant</label>
+                                <div class="col-sm-12">
+                                    <input required placeholder="Montant" name="amount" id="amount" type="number" class="form-control" value="{{$transaction->amount}}">
+                                </div>
+
+                            </div>
+
                             <div class="text-center">
                                 <button  class="primary-api-digital btn btn-primary btn-outline-primary "
                                          type="submit" >
