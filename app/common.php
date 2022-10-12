@@ -305,6 +305,7 @@ function mappingExportTransaction(Collection $transactions): array
         return [
             'ID'=> $transaction->id,
             'Transaction Id'=> $transaction->transaction_id,
+            'Partnaire Id'=> $transaction->external_transaction_id,
             'Numéro'=> $transaction->phone,
             'Montant'=> $transaction->amount  ,
             'Type Operation'=> $transaction->type_operation  ,
