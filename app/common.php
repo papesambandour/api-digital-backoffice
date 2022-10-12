@@ -323,7 +323,7 @@ function mappingExportTransaction(Collection $transactions): array
 
 function  exportMaxSize(): int
 {
-    return (int)20000;
+    return (int)10000;
 }
 
 function isExportExcel(): bool
