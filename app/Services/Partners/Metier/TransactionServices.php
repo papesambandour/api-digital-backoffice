@@ -47,6 +47,7 @@ class TransactionServices
             $transactions->where('amount','>=',request('amount_min'));
         }
         if(isExportExcel()){
+            $transactions->limit(exportMaxSize());
             die (exportExcel(mappingExportTransaction($transactions->get())));
         }
         return $transactions->paginate(size());

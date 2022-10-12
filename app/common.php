@@ -320,6 +320,12 @@ function mappingExportTransaction(Collection $transactions): array
     })->toArray();
 }
 
+
+function  exportMaxSize(): int
+{
+    return (int)20000;
+}
+
 function isExportExcel(): bool
 {
     return !!request('_exported_excel_',false);
