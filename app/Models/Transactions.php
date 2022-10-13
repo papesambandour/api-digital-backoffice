@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $message
  * @property string $transaction_id
  * @property string $external_transaction_id
+ * @property string $rib
  * @property string $sous_service_name
  * @property string $operateur_name
  * @property string $telephone_number_service
