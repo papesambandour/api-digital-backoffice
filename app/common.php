@@ -313,7 +313,7 @@ function mappingExportTransaction(Collection $transactions): array
             'Commission'=> $transaction->commission_amount ,
             'Frais'=> $transaction->fee_amount  ,
             'Services'=> $transaction->sous_service_name  ,
-            'Sous Services'=> $transaction->service_name  ,
+           // 'Sous Services'=> $transaction->service_name  ,
             'Statut'=>  $transaction->{STATUS_TRX_NAME},
             'Date de creation'=> $transaction->created_at->format('Y-m-d'),
         ];
@@ -323,7 +323,7 @@ function mappingExportTransaction(Collection $transactions): array
 
 function  exportMaxSize(): int
 {
-    return (int)20000;
+    return (int)50000;
 }
 
 function isExportExcel(): bool

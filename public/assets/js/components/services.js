@@ -291,7 +291,7 @@ class SousServicesPartners{
             return alert('Veuillez choisir une date de fin')
         }
 
-        if(!confirm('Attention: Nombre maximum de sortie 20.000 lignes')){
+        if(!confirm('Attention: Nombre maximum de sortie 50.000 lignes')){
             return ;
         }
 
