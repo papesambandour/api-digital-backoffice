@@ -58,6 +58,7 @@ function  timeouts(): int
 const STATUS = [
   'SUCCESS' => 'statut-success',
   'CANCELED' => 'table-warning',
+  'REFUNDED' => 'table-warning',
   'FAILLED' => 'statut-danger',
   'PROCESSING' => 'statut-infos',
   'PENDING' => 'statut-infos',
