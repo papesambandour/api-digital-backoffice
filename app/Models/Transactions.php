@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property int $sous_services_id
  * @property int $phones_id
+ * @property int $error_types_id
  * @property int $partener_comptes_id
  * @property int $parteners_id
  * @property string $type_operation
@@ -48,6 +49,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Phones $phones
  * @property Parteners $partener
  * @property SousServices $sousService
+ * @property ErrorType $errorType
  * @property OperationParteners[] $operationParteners
  * @property UssdExecutionMessages[] $ussdExecutionMessages
  */
@@ -88,6 +90,14 @@ class Transactions extends Model
     public function sousService()
     {
         return $this->belongsTo('App\Models\SousServices', 'sous_services_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function errorType()
+    {
+        return $this->belongsTo('App\Models\ErrorType', 'error_types_id');
     }
 
     /**

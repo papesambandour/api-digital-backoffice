@@ -186,12 +186,12 @@
                                         <span class="{{status($transaction->{STATUS_TRX_NAME})}}">
                                         {{ $transaction->{STATUS_TRX_NAME} }}
                                         </span>
-                                       {{-- <details>
-                                            <summary>voir message</summary>
-                                            <p>
-                                                {{$transaction->error_message}}
-                                            </p>
-                                        </details>--}}
+{{--                                        <details>--}}
+{{--                                            <summary>voir message</summary>--}}
+{{--                                            <p>--}}
+{{--                                                {{($transaction->errorType ? $transaction->errorType->message : '') ?? ''}}--}}
+{{--                                            </p>--}}
+{{--                                        </details>--}}
                                     </td>
                                     <td>
                                         {{ $transaction->created_at }}
