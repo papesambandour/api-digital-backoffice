@@ -118,7 +118,6 @@
 
             submittingInput.value = "true";
 
-
             form.submit();
         }
 
