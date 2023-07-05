@@ -46,7 +46,7 @@
 
                 <div class="card-block table-border-style">
 
-                    <form id="formTransaction" onsubmit="handleFormSubmission(event)" action="/partner/transaction/retro/{{$transaction->id}}" method="POST"  class="modal-body col-4">
+                    <form id="formTransaction" onsubmit="event.preventDefault(); handleFormSubmission(event)" action="/partner/transaction/retro/{{$transaction->id}}" method="POST"  class="modal-body col-4">
                         @csrf
                         <div class="form-group row">
                             {{--                 DATE START                --}}
