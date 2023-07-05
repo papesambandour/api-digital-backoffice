@@ -46,7 +46,7 @@
 
                 <div class="card-block table-border-style">
 
-                    <form action="/partner/transaction/retro/{{$transaction->id}}" method="POST"  class="modal-body col-4">
+                    <form id="formTransaction" onsubmit="handleFormSubmission(event)" action="/partner/transaction/retro/{{$transaction->id}}" method="POST"  class="modal-body col-4">
                         @csrf
                         <div class="form-group row">
                             {{--                 DATE START                --}}
@@ -78,6 +78,9 @@
 
                             </div>
 
+                            <input type="hidden" name="submitting" value="false">
+
+
                             <div class="text-center">
                                 <button  class="primary-api-digital btn btn-primary btn-outline-primary "
                                          type="submit" >
@@ -95,6 +98,32 @@
     </div>
 
     <!-- Page-body end -->
+
+
+    <script>
+        function handleFormSubmission(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            var form = document.getElementById("formTransaction");
+            var submittingInput = form.querySelector("input[name='submitting']");
+
+            // Check if the form is already being submitted
+            if (submittingInput.value === "true") {
+                alert("Traitement Déja en cours, veuillez patienter...")
+
+                return false; // Abort form submission
+            }
+
+            window.showLoader("Traitement en cours, veuillez patienter...")
+
+            submittingInput.value = "true";
+
+
+            form.submit();
+        }
+
+
+    </script>
 
 @endsection
 

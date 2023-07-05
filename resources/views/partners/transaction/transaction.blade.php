@@ -244,8 +244,10 @@
 
        function refund(id){
             if(confirm('Êtes-vous sûr de vouloir rembourser ?')){
+                window.showLoader();
             window.location.href = "/partner/transaction/reFund/" + id;
            }
+
         }
 
     </script>
