@@ -187,12 +187,14 @@
                                         <span class="{{status($transaction->{STATUS_TRX_NAME})}}">
                                         {{ $transaction->{STATUS_TRX_NAME} }}
                                         </span>
-{{--                                        <details>--}}
-{{--                                            <summary>voir message</summary>--}}
-{{--                                            <p>--}}
-{{--                                                {{($transaction->errorType ? $transaction->errorType->message : '') ?? ''}}--}}
-{{--                                            </p>--}}
-{{--                                        </details>--}}
+                                        @if($transaction->{STATUS_TRX_NAME} === "FAILLED" && $transaction->code_sous_service === 'BANK_CARD_API_CASH_OUT')
+                                            <details>
+                                                <summary>voir message</summary>
+                                                <p>
+                                                    {{$transaction->error_message}}
+                                                </p>
+                                            </details>
+                                        @endif
                                     </td>
                                     <td>
                                         {{ $transaction->created_at }}
