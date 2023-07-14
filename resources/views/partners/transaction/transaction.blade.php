@@ -164,6 +164,7 @@
                                 <th>Services</th>
                                 <th>Statut</th>
                                 <th>Date</th>
+                                <th>Erreur Type </th>
                                 <th>Options</th>
                             </tr>
                             </thead>
@@ -195,6 +196,17 @@
                                     </td>
                                     <td>
                                         {{ $transaction->created_at }}
+                                    </td>
+                                    <td>
+                                        @if($transaction->error_types_id)
+                                            {{--     Error ID: {{ $transaction->error_types_id }}--}}
+                                            <details>
+                                                <summary>voir message</summary>
+                                                <p>
+                                                    {{@$transaction->errorType->message ?: "N\A"}}
+                                                </p>
+                                            </details>
+                                        @endif
                                     </td>
                                     <td>
                                         <div class="btn-group dropdown-split-success">
