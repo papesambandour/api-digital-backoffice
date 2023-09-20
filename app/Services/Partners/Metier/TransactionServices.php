@@ -31,9 +31,9 @@ class TransactionServices
             $transactions->where(function ($query)  {
                 $query
                     ->where('external_transaction_id','like',"%".request('search_in_any_id_transaction') . "%")
-                    ->orWhere('id','like',"%".request('search_in_any_id_transaction') . "%")
-                    ->orWhere('transaction_id','like',"%".request('search_in_any_id_transaction') . "%")
-                    ->orWhere('sous_service_transaction_id','like',"%".request('search_in_any_id_transaction') . "%")
+                    //->orWhere('id','like',"%".request('search_in_any_id_transaction') . "%")
+                    ->orWhere('transaction_id', request('search_in_any_id_transaction'))
+                   // ->orWhere('sous_service_transaction_id','like',"%".request('search_in_any_id_transaction') . "%")
                 ;
             });
         }
