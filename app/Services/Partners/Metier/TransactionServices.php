@@ -14,7 +14,7 @@ class TransactionServices
     public function paginate()
     {
       //  dd(request('sous_services_id'));
-        $transactions = Transactions::query()->orderBy('id','DESC')->where('parteners_id',_auth()['parteners_id']);
+        $transactions = Transactions::query()->orderBy('id','DESC')->limit(10)->where('parteners_id',_auth()['parteners_id']);
         if(request('statut')){
             $transactions->where(STATUS_TRX_NAME,request('statut'));
         }
