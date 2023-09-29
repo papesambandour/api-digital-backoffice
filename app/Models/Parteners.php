@@ -37,7 +37,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Parteners extends Model
 {
     protected $appends=['user'];
-    public PartnersUsers $user;
+    public ?PartnersUsers $user = null;
     /**
      * @var array
      */

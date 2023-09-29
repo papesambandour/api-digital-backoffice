@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Actions;
+use App\Models\Authorization\PartnersActions;
 use App\Models\Authorization\PartnersActionsRoles;
 use App\Models\Authorization\PartnersRoles;
 use App\Models\Authorization\PartnersUsers;
@@ -387,18 +388,19 @@ function action_role(): string
  * @throws NotFoundExceptionInterface
  */
 function user_partner():PartnersUsers|null{
-    return getUser()->user;
+    return (!is_null(getUser()) && !is_null(getUser()->user) )? getUser()->user: null ;
 }
 
 /**
  * @throws ContainerExceptionInterface
  * @throws NotFoundExceptionInterface
  */
-function has($actionCode):string{
-    $action= Actions::where('code',$actionCode)->first();
-   return PartnersActionsRoles::where("parteners_roles_id",user_partner()->partnerRole->id)
+function has($actionCode,$roleId=null):string{
+    $action= PartnersActions::where('code',$actionCode)->orWhere('id',$actionCode)->first();
+
+   return PartnersActionsRoles::where("parteners_roles_id",$roleId ? :@user_partner()->partnerRole->id)
        ->where('parteners_actions_id',$action->id)
-            ->exist();
+            ->exists();
 
 }
 

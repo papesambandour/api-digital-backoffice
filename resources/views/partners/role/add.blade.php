@@ -77,7 +77,7 @@
                                        <div class="col-sm-4">
 
                                            <label>
-                                               <input type="checkbox" name="actions[]" value="{{$action->id}}">
+                                               <input @if(has($action->code,$role->id)) checked @endif type="checkbox" name="actions[]" value="{{$action->id}}">
                                                {{$action->name}}
                                            </label>
                                        </div>
