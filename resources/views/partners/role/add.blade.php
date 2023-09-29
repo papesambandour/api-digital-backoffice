@@ -44,7 +44,7 @@
                <div class="card">
                    <div class="card-header">
                        <div class="card-block">
-                           <form method="POST" action="{{$role ? '/partner/role/'.$role->id  :'/partner/role'}}" onsubmit="document.getElementById('submit_users').setAttribute('disabled', 'disabled')">
+                           <form id="frmRole" method="POST" action="{{$role ? '/partner/role/'.$role->id  :'/partner/role'}}" onsubmit="document.getElementById('submit_users').setAttribute('disabled', 'disabled')">
                                <div class="form-group row">
                                    <h3>Informations du role</h3>
                                </div>
@@ -65,6 +65,23 @@
                                        </div>
                                        @enderror
                                    </div>
+
+
+                               </div>
+                               <h5 class="mt-2 mb-5">Définir les actions du role</h5>
+
+                               <div class="form-group row">
+
+                                   @foreach($partnersActions as $action)
+
+                                       <div class="col-sm-4">
+
+                                           <label>
+                                               <input type="checkbox" name="actions[]" value="{{$action->id}}">
+                                               {{$action->name}}
+                                           </label>
+                                       </div>
+                                   @endforeach
                                </div>
 
 
@@ -99,6 +116,11 @@
 @endsection
 
 @section('js')
+    <script>
+        @if(!$role)
+          document.getElementById('frmRole').reset();
+        @endif
+    </script>
 
 @endsection
 

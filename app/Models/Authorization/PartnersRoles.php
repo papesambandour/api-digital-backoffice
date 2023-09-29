@@ -5,6 +5,7 @@ namespace App\Models\Authorization;
 use App\Models\ActionsProfils;
 use App\Models\Modules;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
@@ -18,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $url
  * @property string $icon
  * @property Modules $module
- * @property ActionsProfils[] $actionsProfils
+ * @property PartnersActionsRoles[] $partnersActionsRoles;
  */
 class PartnersRoles extends Model
 {
@@ -27,5 +28,9 @@ class PartnersRoles extends Model
      * @var array
      */
     protected $guarded = ['id'];
+    function partnersActionsRoles(): HasMany
+    {
+        return $this->hasMany(PartnersActionsRoles::class,'parteners_roles_id');
+    }
 
 }
