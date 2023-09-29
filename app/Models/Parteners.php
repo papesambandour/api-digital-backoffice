@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use App\Models\Authorization\PartnersRoles;
+use App\Models\Authorization\PartnersUsers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
@@ -28,16 +31,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property Transactions[] $transactions
  * @property Country $country
  * @property string $allow_id
+ * @property PartnersUsers $users
+ * @property PartnersRoles $partnersRoles
  */
 class Parteners extends Model
 {
+    protected $appends=['user'];
+    public PartnersUsers $user;
     /**
      * @var array
      */
     protected $fillable = ['allow_id','countries_id','created_at', 'updated_at', 'state', 'solde', 'amount_reserved', 'name', 'phone', 'email', 'adress', 'password', 'first_connection', 'password_expired', 'password_duration_day'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function commissions()
     {
@@ -45,7 +52,7 @@ class Parteners extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function operationParteners()
     {
@@ -53,7 +60,7 @@ class Parteners extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function partenerComptes()
     {
@@ -61,7 +68,7 @@ class Parteners extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function partenerSettings()
     {
@@ -69,7 +76,7 @@ class Parteners extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function sousServicesParteners()
     {
@@ -77,7 +84,7 @@ class Parteners extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function transactions()
     {
@@ -89,5 +96,13 @@ class Parteners extends Model
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class, 'countries_id');
+    }
+    function partnersRoles(): HasMany
+    {
+        return $this->hasMany(PartnersRoles::class,'parteners_id');
+    }
+    function users(): HasMany
+    {
+        return $this->hasMany(PartnersUsers::class,'parteners_id');
     }
 }

@@ -1,10 +1,16 @@
 <?php
 
+use App\Models\Actions;
+use App\Models\Authorization\PartnersActionsRoles;
+use App\Models\Authorization\PartnersRoles;
+use App\Models\Authorization\PartnersUsers;
 use App\Models\Country;
+use App\Models\Parteners;
 use App\Models\SousServices;
 use App\Models\Transactions;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 use JetBrains\PhpStorm\ArrayShape;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -14,10 +20,10 @@ use Psr\Container\NotFoundExceptionInterface;
 #[ArrayShape(["first_name" => "string",  "parteners_id" => "string", "solde" => "string"])] function _auth(): array
 {
     /**
-     * @var \App\Models\Parteners $partner
+     * @var Parteners $partner
     */
     //dd(getUser());
-    $partner = \App\Models\Parteners::query()->find(getUser()['id']);
+    $partner = Parteners::query()->find(getUser()['id']);
     return [
         "first_name" =>$partner->name,
         "parteners_id" =>$partner->id,
@@ -25,7 +31,7 @@ use Psr\Container\NotFoundExceptionInterface;
     ];
 }
 function user(){
-    return \App\Models\Parteners::query()->find(getUser()['id']);
+    return Parteners::query()->find(getUser()['id']);
 }
 function title(string $title): string
 {
@@ -113,15 +119,20 @@ function logoFromName($name): string{
     ])
                     ->where('parteners_id',_auth()['parteners_id'])->where(STATUS_TRX_NAME,$status)->sum('amount') ;
 }
-function loginUser(\App\Models\Parteners $partner):void{
+function loginUser(Parteners $partner, PartnersUsers $user= null):void{
+    if($user){
+        $partner->user=$user;
+    }
     session([keyAuth() => $partner]);
 }
 
 /**
+ * @return Parteners|null
  * @throws ContainerExceptionInterface
  * @throws NotFoundExceptionInterface
  */
-function getUser(){
+function getUser():Parteners|null
+{
   return  session()->get(keyAuth());
 }
 function keyAuth(): string
@@ -330,4 +341,73 @@ function  exportMaxSize(): int
 function isExportExcel(): bool
 {
     return !!request('_exported_excel_',false);
+}
+function action_dashboard(): string
+{
+    return "dashboard";
+}
+function action_transaction(): string
+{
+    return "transaction";
+}
+function action_versement(): string
+{
+    return "versement";
+}
+
+function action_mvm_compte(): string
+{
+    return "mvm-compte";
+}
+function action_claim(): string
+{
+    return "claim";
+}
+function action_service(): string
+{
+    return "service";
+}
+function action_apikey(): string
+{
+    return "apikey";
+}
+
+function action_user(): string
+{
+    return "user";
+}
+function action_role(): string
+{
+    return "role";
+}
+
+/**
+ * @return PartnersUsers|null
+ * @throws ContainerExceptionInterface
+ * @throws NotFoundExceptionInterface
+ */
+function user_partner():PartnersUsers|null{
+    return getUser()->user;
+}
+
+/**
+ * @throws ContainerExceptionInterface
+ * @throws NotFoundExceptionInterface
+ */
+function has($actionCode):string{
+    $action= Actions::where('code',$actionCode)->first();
+   return PartnersActionsRoles::where("parteners_roles_id",user_partner()->partnerRole->id)
+       ->where('parteners_actions_id',$action->id)
+            ->exist();
+
+}
+
+function getCodeRole($name): string
+{
+    $code = Str::slug($name);
+    $ctp=1;
+    while (PartnersRoles::where('code',$code)->exists()){
+        $code .= $ctp++;
+    }
+    return $code;
 }

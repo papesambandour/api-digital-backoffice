@@ -73,6 +73,21 @@
                     <span class="pcoded-mcaret"></span>
                 </a>
             </li>
+            <div class="pcoded-navigatio-lavel" >Utilisateur</div>
+            <li class="active">
+                <a href="/partner/role">
+                    <span class="pcoded-micon"><i class="ti-direction-alt"></i><b>U</b></span>
+                    <span class="pcoded-mtext" >Mes roles</span>
+                    <span class="pcoded-mcaret"></span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="/partner/user">
+                    <span class="pcoded-micon"><i class="ti-direction-alt"></i><b>U</b></span>
+                    <span class="pcoded-mtext" >Mes utilisateurs</span>
+                    <span class="pcoded-mcaret"></span>
+                </a>
+            </li>
 {{--            <li class="active">--}}
 {{--                <a href="/partner/reclamation">--}}
 {{--                    <span class="pcoded-micon"><i class="ti-direction-alt"></i><b>D</b></span>--}}
