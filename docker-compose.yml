@@ -1,6 +1,7 @@
 version: '3'
 services:
     laravel:
+       container_name: digital_api_front_cts
        build:
            context: .
        ports:
