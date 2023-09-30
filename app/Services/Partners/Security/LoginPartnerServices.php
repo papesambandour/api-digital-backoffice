@@ -19,7 +19,7 @@ class LoginPartnerServices
        if(!$partner && $partnerUser){
            $isPartnerUser=true;
        }
-       // dd($partner,$partnerUser,$isPartnerUser);
+       // dd($partner,$partnerUser,$isPartnerUser,$user,$password);
 
 
         if(!$isPartnerUser && $partner && Hash::check( $password,$partner->password) ){

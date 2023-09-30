@@ -55,8 +55,8 @@
 
                <div class="card">
                    <div class="card-header">
-                       <div class="card-block">
-                           <form method="POST" action="/partner/account" onsubmit="document.getElementById('submit_users').setAttribute('disabled', 'disabled')">
+                       <div class="card-block" style="padding: 1.25rem;min-height: 400px;">
+                           <form style="padding: 1.25rem;min-height: 400px;" method="POST" action="/partner/account" onsubmit="document.getElementById('submit_users').setAttribute('disabled', 'disabled')">
                                <div class="form-group row">
                                    <h3>Modification information personnel</h3>
                                </div>
@@ -99,7 +99,7 @@
                                     </span>
                                    </label>
                                    <div class="col-sm-6">
-                                       <textarea
+                                       <textarea rows="1"
                                            name="allow_id" id="allow_id"
                                            class="form-control form-control-normal" placeholder="IP autorisés">{{$user->allow_id}}</textarea>
                                        @error('allow_id')
@@ -126,7 +126,7 @@
 
 
 
-                                  <div class="form-group row" style="margin-top: 100px">
+                                  <div class="form-group row justify-content-center align-items-end" style="margin-top: 100px">
                                       <div class="col-sm-6">
                                           <button id="submit_users"  type="submit"
                                                   class="primary-api-digital btn btn-primary btn-outline-primary btn-block"><i
@@ -148,8 +148,8 @@
               <div class="col-6">
                   <div class="card">
                       <div class="card-header">
-                          <div class="card-block">
-                              <form method="POST" action="/partner/password" onsubmit="document.getElementById('password_submit').setAttribute('disabled', 'disabled')">
+                          <div class="card-block" style="padding: 1.25rem;min-height: 400px;">
+                              <form style="padding: 1.25rem;min-height: 411px;" method="POST" action="/partner/password" onsubmit="document.getElementById('password_submit').setAttribute('disabled', 'disabled')">
                                   <div class="form-group row">
                                       <h3>Modification mot de passe</h3>
                                   </div>
@@ -195,8 +195,8 @@
                                </div>
                                {{-- #############################################FILED ############################## --}}
 
-                               <div class="form-group row" style="margin-top: 100px">
-                                   <div class="col-sm-6">
+                               <div class="form-group row justify-content-center" style="margin-top: 110px">
+                                   <div class="col-sm-6 text-center">
                                        <button id="password_submit"  type="submit"
                                                class="primary-api-digital btn btn-primary btn-outline-primary btn-block"><i
                                                class="icofont icofont-save"></i>Modifier le mot de passe
@@ -228,4 +228,5 @@
 @endsection
 
 @section('css')
+
 @endsection

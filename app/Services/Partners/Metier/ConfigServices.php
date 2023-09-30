@@ -41,7 +41,7 @@ class ConfigServices
     }
     public function addKey(){
         $key  = PartenerComptes::query()->where('parteners_id',_auth()['parteners_id'])->count();
-       return PartenerComptes::create([
+       $apiKey= PartenerComptes::create([
             'type_partener_compte' => TYPE_PARTNER_COMPTE['API'],
             'parteners_id' => _auth()['parteners_id'],
             'created_at' => nowIso(),
@@ -49,6 +49,8 @@ class ConfigServices
             'name' => _auth()['first_name'] . ' API KEY ' . (++$key) ,
             'app_key' => GUID(),
         ]);
+        log_user_action(action_apikey().':add', 'Ajout clé API', logSuccess(), @$apiKey->getTable(), @$apiKey->id);
+       return $apiKey;
     }
     public function regenerateKey($idKey): PartenerComptes
     {
@@ -58,6 +60,7 @@ class ConfigServices
         $partenerComptes  = PartenerComptes::query()->where('parteners_id',_auth()['parteners_id'])->where('id',$idKey)->first();
         $partenerComptes->app_key = GUID();
         $partenerComptes->save();
+        log_user_action(action_apikey().':regenerate', 'Régénération clé API', logSuccess(), @$partenerComptes->getTable(), @$partenerComptes->id);
         return $partenerComptes;
     }
     public function revoqKey($idKey): PartenerComptes
@@ -68,6 +71,7 @@ class ConfigServices
         $partenerComptes  = PartenerComptes::query()->where('parteners_id',_auth()['parteners_id'])->where('id',$idKey)->first();
         $partenerComptes->state = $partenerComptes->state === STATE['ACTIVED'] ? STATE['INACTIVED'] : STATE['ACTIVED'];
         $partenerComptes->save();
+        log_user_action(action_apikey().':revok', 'Révocation clé API', logSuccess(), @$partenerComptes->getTable(), @$partenerComptes->id);
         return $partenerComptes;
     }
 

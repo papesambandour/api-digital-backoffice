@@ -24,6 +24,10 @@ class DashboardController extends Controller
       $services  = $this->configServices->services();
       return view('partners/dashboard.dashboard',compact('services'));
   }
+  public function home(): Factory|View|Application
+  {
+      return view('partners/dashboard.home');
+  }
   public function statistic(): Factory|View|Application
   {
       return view('partners/dashboard.statistic');

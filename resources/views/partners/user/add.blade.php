@@ -89,7 +89,7 @@
                                    <label for="email" class="col-sm-6 col-form-label">Email</label>
                                    <div class="col-sm-6">
                                        <input required  value="{{old('email',@$user->email)}}" name="email" id="email" type="email"
-                                              class="form-control form-control-normal" placeholder="Téléphone">
+                                              class="form-control form-control-normal" placeholder="Email">
                                        @error('email')
                                        <div  class="invalid-feedback ">
                                            {{ $message }}

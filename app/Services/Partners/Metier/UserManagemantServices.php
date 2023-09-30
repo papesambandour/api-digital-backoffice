@@ -38,7 +38,6 @@ class UserManagemantServices
     public function paginateRoles(): LengthAwarePaginator
     {
         $query=  getUser()->partnersRoles();
-
         if(request('date_start')){
             $query->where('created_at','>=',dateFilterStart(request('date_start')));
         }

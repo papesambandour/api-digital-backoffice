@@ -44,31 +44,34 @@ Route::group(['middleware'=>[],'prefix'=>'auth-partner'],function(){
 
 Route::group(['middleware'=>['partner-auth'],'prefix'=>'partner'],function(){
     /*REPORTING START*/
-    Route::get('/',[DashboardController::class,'dashboard'] );
-    Route::get('/statistic',[DashboardController::class,'statistic'] );
+    Route::get('/home',[DashboardController::class,'home'] );
+    Route::get('/',[DashboardController::class,'dashboard'] )->name(action_dashboard());
+   // Route::get('/statistic',[DashboardController::class,'statistic'] );
     /*REPORTING START*/
 
     /*TRANSACTION START*/
-    Route::get('/transaction/retro/{transaction}',[TransactionsController::class,'retro'] );
-    Route::post('/transaction/retro/{transaction}',[TransactionsController::class,'retroSave'] );
-    Route::get('/transaction/reFund/{transaction}',[TransactionsController::class,'reFund'] );
-    Route::get('/transaction',[TransactionsController::class,'transaction'] );
-    Route::get('/versement',[TransactionsController::class,'versement'] );
-    Route::get('/mvm-compte',[TransactionsController::class,'mvmCompte'] );
+    Route::get('/transaction/retro/{transaction}',[TransactionsController::class,'retro'] )->name(action_retro_trx().':create');
+    Route::post('/transaction/retro/{transaction}',[TransactionsController::class,'retroSave'] )->name(action_retro_trx());
+    Route::get('/transaction/reFund/{transaction}',[TransactionsController::class,'reFund'] )->name(action_refund());
+    Route::get('/transaction',[TransactionsController::class,'transaction'] )->name(action_transaction());
+    Route::get('/versement',[TransactionsController::class,'versement'] )->name(action_versement());
+    Route::get('/mvm-compte',[TransactionsController::class,'mvmCompte'] )->name(action_mvm_compte());
     /*TRANSACTION END*/
 
     /*CONFIGURATIONS START*/
-    Route::get('/service',[ConfigurationController::class,'service'] );
-    Route::get('/apikey',[ConfigurationController::class,'apikey'] );
-    Route::post('/apikey/addkey',[ConfigurationController::class,'addKey'] );
-    Route::post('/apikey/regenerateKey/{idKey}',[ConfigurationController::class,'regenerateKey'] );
-    Route::post('/apikey/revoqKey/{idKey}',[ConfigurationController::class,'revoqKey'] );
-    Route::post('/apikey/raname/{idKey}',[ConfigurationController::class,'ranameKey'] );
-    Route::get('/reclamation',[ConfigurationController::class,'reclamation'] );
+    Route::get('/service',[ConfigurationController::class,'service'] )->name(action_service());
+    Route::get('/apikey',[ConfigurationController::class,'apikey'] )->name(action_apikey());
+    Route::post('/apikey/addkey',[ConfigurationController::class,'addKey'] )->name(action_apikey().':add');
+    Route::post('/apikey/regenerateKey/{idKey}',[ConfigurationController::class,'regenerateKey'] )->name(action_apikey().':regenerate');
+    Route::post('/apikey/revoqKey/{idKey}',[ConfigurationController::class,'revoqKey'] )->name(action_apikey().':revoq');
+    Route::post('/apikey/raname/{idKey}',[ConfigurationController::class,'ranameKey'] )->name(action_apikey().':ranameKey');;
+   // Route::get('/reclamation',[ConfigurationController::class,'reclamation'] )->name(action_claim());
     /*CONFIGURATIONS END*/
 
     /*CLAIM START*/
-    Route::resource('/claim', ClaimController::class)->only(['index','store','create','delete','update','edit','show']);
+    Route::resource('/claim', ClaimController::class,[
+        'names'=>['index'=>action_claim(),'store'=>action_claim().':add','create'=>action_claim().':create','delete'=>action_claim().':delete','update'=>action_claim().':update','edit'=>action_claim().':edit','show'=>action_claim().':show']
+    ])->only(['index','store','create','delete','update','edit','show']);
     /*CLAIM END*/
 
     Route::get('/profil', [UsersController::class,'profil']);
@@ -77,10 +80,15 @@ Route::group(['middleware'=>['partner-auth'],'prefix'=>'partner'],function(){
 
 
     /*USER START*/
-    Route::resource('/user', UsersPartnerController::class)->only(['index','store','create','delete','update','edit','show']);
+    Route::resource('/user', UsersPartnerController::class,[
+        'names'=>['index'=>action_user(),'store'=>action_user().':add','create'=>action_user().':create','delete'=>action_user().':delete','update'=>action_user().':update','edit'=>action_user().':edit','show'=>action_user().':show']
+    ])->only(['index','store','create','delete','update','edit','show']);
     /*USER END*/
 
     /*USER START*/
-    Route::resource('/role', RolePartnerController::class)->only(['index','store','create','delete','update','edit','show']);
+    Route::resource('/role', RolePartnerController::class,
+    [
+        'names'=>['index'=>action_role(),'store'=>action_role().':add','create'=>action_role().':create','delete'=>action_role().':delete','update'=>action_role().':update','edit'=>action_role().':edit','show'=>action_role().':show']
+    ])->only(['index','store','create','delete','update','edit','show']);
     /*USER END*/
 });

@@ -33,11 +33,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $allow_id
  * @property PartnersUsers $users
  * @property PartnersRoles $partnersRoles
+ * @property boolean $is_admin
  */
 class Parteners extends Model
 {
-    protected $appends=['user'];
+    protected $appends=['user','is_admin'];
     public ?PartnersUsers $user = null;
+    public bool $is_admin = false;
     /**
      * @var array
      */

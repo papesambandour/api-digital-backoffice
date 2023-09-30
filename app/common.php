@@ -6,6 +6,7 @@ use App\Models\Authorization\PartnersActionsRoles;
 use App\Models\Authorization\PartnersRoles;
 use App\Models\Authorization\PartnersUsers;
 use App\Models\Country;
+use App\Models\LogUsers;
 use App\Models\Parteners;
 use App\Models\SousServices;
 use App\Models\Transactions;
@@ -123,6 +124,8 @@ function logoFromName($name): string{
 function loginUser(Parteners $partner, PartnersUsers $user= null):void{
     if($user){
         $partner->user=$user;
+    }else{
+        $partner->is_admin = true;
     }
     session([keyAuth() => $partner]);
 }
@@ -351,6 +354,10 @@ function action_transaction(): string
 {
     return "transaction";
 }
+function action_retro_trx(): string
+{
+    return "retro_trx";
+}
 function action_versement(): string
 {
     return "versement";
@@ -381,6 +388,10 @@ function action_role(): string
 {
     return "role";
 }
+function action_refund(): string
+{
+    return "refund";
+}
 
 /**
  * @return PartnersUsers|null
@@ -391,15 +402,17 @@ function user_partner():PartnersUsers|null{
     return (!is_null(getUser()) && !is_null(getUser()->user) )? getUser()->user: null ;
 }
 
-/**
- * @throws ContainerExceptionInterface
- * @throws NotFoundExceptionInterface
- */
-function has($actionCode,$roleId=null):string{
+function action_exist($actionCode){
+    return PartnersActions::where("code",$actionCode)->exists();
+}
+function has($actionCode,$roleId=null):bool{
+    if(!$roleId && @getUser()->is_admin ){
+      return true;
+    }
     $action= PartnersActions::where('code',$actionCode)->orWhere('id',$actionCode)->first();
 
    return PartnersActionsRoles::where("parteners_roles_id",$roleId ? :@user_partner()->partnerRole->id)
-       ->where('parteners_actions_id',$action->id)
+       ->where('parteners_actions_id',@$action->id)
             ->exists();
 
 }
@@ -412,4 +425,47 @@ function getCodeRole($name): string
         $code .= $ctp++;
     }
     return $code;
+}
+
+/**
+ * @param $actionName
+ * @param $actionCode
+ * @param string $status
+ * @param string $table_name
+ * @param int|null $table_id
+ * @return void
+ */
+function log_user_action($actionName, $actionCode, string $status='', string $table_name='', int $table_id=null,$error_message=''):void{
+    try {
+        $data = [
+            'action_name' => $actionName,
+            'action_code' => $actionCode,
+            'status' => $status,
+            'error_message' => $error_message,
+            'url' => request()->url(),
+            'method' => request()->method(),
+            'ips' => json_encode(request()->ips()),
+            'user_agent' => request()->header('User-Agent'),
+            'request_data' => json_encode(request()->all()),
+            'table_name' => $table_name,
+            'table_id' => $table_id,
+            'user_admin_id' => getUser()->id,
+            'user_admin_email' => getUser()->email,
+            'user_partner_id' => @user_partner()->id,
+            'user_partner_role_name' => @user_partner()->partnerRole->name,
+            'user_partner_role_id' => @user_partner()->partnerRole->id,
+        ];
+        LogUsers::create($data);
+
+    } catch (Exception|NotFoundExceptionInterface|ContainerExceptionInterface $e) {
+        //dd($e);
+    }
+}
+function logSuccess(): string
+{
+    return 'SUCCESS';
+}
+function logFailed(): string
+{
+    return 'FAILED';
 }

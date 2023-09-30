@@ -5,6 +5,7 @@ namespace App\Models\Authorization;
 use App\Models\ActionsProfils;
 use App\Models\Modules;
 use App\Models\Parteners;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -26,10 +27,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $password
  * @property Parteners $partner
  * @property PartnersRoles $partnerRole
+ * @property string $name
  */
 class PartnersUsers extends Model
 {
     protected $table = 'parteners_users';
+    protected $appends=['name'];
+    public function name():Attribute{
+        return Attribute::make(fn()=> $this->first_name . " " . $this->last_name );
+    }
     /**
      * @var array
      */

@@ -16,6 +16,16 @@
             </ul>
         </div>
     @endif
+    <div class="col-md-12">
+        @if(Session::has('success'))
+            <p class="alert alert-success">{{ Session::get('success') }}</p>
+        @endif
+    </div>
+    <div class="col-md-12">
+        @if(Session::has('error'))
+            <p class="alert alert-danger">{{ Session::get('error') }}</p>
+        @endif
+    </div>
 
     <div class="page-wrapper">
         <!-- Page-header start -->
@@ -73,11 +83,10 @@
                                <div class="form-group row">
 
                                    @foreach($partnersActions as $action)
-
                                        <div class="col-sm-4">
 
                                            <label>
-                                               <input @if(has($action->code,$role->id)) checked @endif type="checkbox" name="actions[]" value="{{$action->id}}">
+                                               <input @if(has($action->code,@$role->id)) checked @endif type="checkbox" name="actions[]" value="{{$action->id}}">
                                                {{$action->name}}
                                            </label>
                                        </div>
@@ -93,6 +102,12 @@
                                                   class="primary-api-digital btn btn-primary btn-outline-primary btn-block"><i
                                                   class="icofont icofont-save"></i>Enregistrer
                                           </button>
+                                      </div>
+                                      <div class="col-sm-3">
+                                          <a href="/partner/role" id="submit_users"
+                                                  class="danger-api-digital  btn btn-danger btn-outline-danger btn-block"><i
+                                                  class="icofont icofont-close"></i>Fermer
+                                          </a>
                                       </div>
 
 

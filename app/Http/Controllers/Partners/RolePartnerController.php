@@ -12,8 +12,6 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 
 class RolePartnerController extends Controller
 {
@@ -68,6 +66,7 @@ class RolePartnerController extends Controller
         $role['code']= getCodeRole($role['name']);
         $roleDb = PartnersRoles::create($role);
         $this->syncAction($roleDb,$role['actions']);
+        log_user_action(action_role().':add', 'Ajout role ', logSuccess(), @$roleDb->getTable(), @$roleDb->id);
         return redirect("/partner/role")->with('success','Role ajouter avec sucés');
     }
     function syncAction(PartnersRoles $role,array $actions): void
@@ -91,7 +90,8 @@ class RolePartnerController extends Controller
        //dd($request->all());
         $roleDb->update($role);
         $this->syncAction($roleDb,$role['actions']);
-        return redirect("/partner/role")->with('success','Role mise à jour avec sucés');
+        log_user_action(action_role().':update', 'Modification utilisateur ', logSuccess(), @$roleDb->getTable(), @$roleDb->id);
+        return redirect("/partner/role/$id/edit")->with('success','Role mise à jour avec sucés');
     }
 
 }

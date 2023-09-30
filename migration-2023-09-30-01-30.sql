@@ -1,0 +1,30 @@
+-- CREATE LOG USER TABLE
+CREATE TABLE `digital_api_db`.`log_users`
+(
+    `id`                     INT          NOT NULL AUTO_INCREMENT,
+    `action_name`            VARCHAR(255) NOT NULL,
+    `action_code`            VARCHAR(255) NOT NULL,
+    `status`                 VARCHAR(255) NULL,
+    `error_message`          TEXT NULL,
+    `url`                    TEXT NULL,
+    `method`                 VARCHAR(255) NULL,
+    `ips`                    TEXT NULL,
+    `user_agent`             VARCHAR(255) NULL,
+    `request_data`           LONGTEXT NULL,
+    `table_name`             VARCHAR(255) NULL,
+    `table_id`               INT NULL,
+    `user_admin_id`          INT NULL,
+    `user_admin_email`       VARCHAR(255) NULL,
+    `user_partner_id`        INT NULL,
+    `user_partner_role_name` VARCHAR(255) NULL,
+    `user_partner_role_id`   INT NULL,
+    PRIMARY KEY (`id`),
+    INDEX (`action_name`),
+    INDEX (`action_code`),
+    INDEX (`table_name`),
+    INDEX (`table_id`),
+    INDEX (`user_admin_email`),
+    INDEX (`user_partner_id`),
+    INDEX (`user_partner_role_name`),
+    INDEX (`user_partner_role_id`)
+) ENGINE = InnoDB;

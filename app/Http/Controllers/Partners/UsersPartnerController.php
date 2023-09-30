@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Partners;
 
 use App\Http\Controllers\Controller;
 use App\Models\Authorization\PartnersUsers;
+use App\Services\Helpers\Mail\MailSenderService;
+use App\Services\Helpers\Utils;
 use App\Services\Partners\Metier\UserManagemantServices;
 use App\Services\UserServices;
 use Illuminate\Contracts\Foundation\Application;
@@ -11,19 +13,22 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\DB;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
 class UsersPartnerController extends Controller
 {
    public UserManagemantServices $services;
+    public  MailSenderService $mailSenderService;
 
     /**
      * @param UserManagemantServices $services
      */
-    public function __construct(UserManagemantServices $services)
+    public function __construct(UserManagemantServices $services,MailSenderService $mailSenderService)
     {
         $this->services = $services;
+        $this->mailSenderService = $mailSenderService;
     }
 
     /**
@@ -69,9 +74,14 @@ class UsersPartnerController extends Controller
 
     public function store(Request $request)
     {
+        $password = Utils::generateKey();
         $user= $this->validate($request,$this->getRules());
         $user['parteners_id']=getUser()->id;
-        PartnersUsers::create($user);
+        $user['password'] = $password['hash'];
+        $userDb=PartnersUsers::create($user);
+        $userDb->password = $password['password'];
+        $this->mailSenderService->sendPartnerCreated($userDb->toArray());
+        log_user_action(action_user().':add', 'Ajout utilisateur ', logSuccess(), @$userDb->getTable(), @$userDb->id);
         return redirect("/partner/user")->with('success','Utilisateur ajouter avec sucés');
     }
     public function update(Request $request,$id)
@@ -79,6 +89,7 @@ class UsersPartnerController extends Controller
         $userDb = PartnersUsers::findOrFail($id);
         $user= $this->validate($request,$this->getRules($id));
         $userDb->update($user);
+        log_user_action(action_user().':update', 'Modification utilisateur ', logSuccess(), @$userDb->getTable(), @$userDb->id);
         return redirect("/partner/user")->with('success','Utilisateur mise à jour avec sucés');
     }
 

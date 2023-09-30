@@ -39,14 +39,20 @@
                     <a href="#!">
                         <img src="/assets/icon/profil.svg" alt="User Profile" />
                         <span>{{_auth()['first_name']}}</span>
+                        @if(getUser()->is_admin)
+                            <span class="text-c-blue f-w-600">{{getUser()->name}}</span>
+                        @endif
+                        @if(!getUser()->is_admin)
+                            <span class="text-c-blue f-w-600">{{user_partner()->name}}</span>
+                        @endif
                         <i class="ti-angle-down"></i>
                     </a>
                     <ul class="show-notification profile-notification">
-                        <li>
+                       {{-- <li>
                             <a href="#">
                                 <i class="ti-user"></i> Profil
                             </a>
-                        </li>
+                        </li>--}}
                         <li>
                             <a href="/partner/profil">
                                 <i class="ti-user"></i> Modifier mot de passe

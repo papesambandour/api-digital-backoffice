@@ -25,6 +25,8 @@ class AuthorizationSeeder extends Seeder
             array('name'=>'Clefs APIs','code'=>action_apikey()),
             array('name'=>'Utilisateur','code'=>action_user()),
             array('name'=>'Roles','code'=>action_role()),
+            array('name'=>'Remboursement/Annulation','code'=>action_refund()),
+            array('name'=>'Retro transaction','code'=>action_retro_trx()),
         ];
 
         collect($actions)->
