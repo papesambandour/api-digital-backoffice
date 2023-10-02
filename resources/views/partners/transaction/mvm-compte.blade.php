@@ -99,6 +99,8 @@
                             <tr>
                                 <th># Id</th>
                                 <th>Montant</th>
+                                <th>Solde  Avant</th>
+                                <th>Solde Apres</th>
                                 <th>Operation de </th>
                                 <th>Provenance </th>
                                 <th>Date</th>
@@ -112,7 +114,10 @@
                                             {{$mouvement->id}}
                                         </span>
                                     </th>
-                                    <td> <span class="currency"> {{ $mouvement->amount }} XOF</span> </td>
+                                    <td> <span class="currency"> {{ number($mouvement->amount) }} XOF</span> </td>
+
+                                    <td> <span class="currency"> {{ number($mouvement->solde_befor) }} XOF</span> </td>
+                                    <td> <span class="currency"> {{ number($mouvement->solde_after) }} XOF</span> </td>
 
                                     <td> <span class="statut-success">{{$mouvement->type_operation}} </span> </td>
                                     <td> <span class="statut-infos" >{{$mouvement->operation}} </span> </td>

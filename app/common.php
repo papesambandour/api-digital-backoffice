@@ -40,6 +40,12 @@ function title(string $title): string
     return "INTECH API " . $title;
 }
 
+function number($number,$decimal = 1,$decimal_separator = '.',$separator_thousand=' ') : string
+{
+    return number_format((float)$number,$decimal,$decimal_separator,$separator_thousand);
+}
+
+
 function dateFilterStart($date): DateTime
 {
     return DateTime::createFromFormat('Y-m-d H:i:s', $date .' 00:00:00');
