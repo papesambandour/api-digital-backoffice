@@ -39,7 +39,7 @@ class AuthPartnersController extends Controller
        $login = $this->loginPartnerServices->login($credentials['email'],$credentials['password']);
        if($login){
            if(has(action_dashboard())){
-               return redirect('partner');
+               return redirect('partner/transaction');
            }else{
                return redirect('partner/home');
            }
